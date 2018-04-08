@@ -2,9 +2,9 @@ import React from 'react';
 import {TextInput, Button, StyleSheet, Text, View} from 'react-native';
 
 import Amplify, {Auth} from 'aws-amplify';
-import AWSConfig from './awsmobilejs/#current-backend-info/aws-exports';
+// import AWSConfig from './awsmobilejs/#current-backend-info/aws-exports';
 
-Amplify.configure(AWSConfig);
+// Amplify.configure(AWSConfig);
 
 export default class App extends React.Component {
     state = {
@@ -42,37 +42,45 @@ export default class App extends React.Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <TextInput
-                    onChangeText={value => this.onChangeText('username', value)}
-                    style={styles.input}
-                    placeholder='username'
-                />
-                <TextInput
-                    onChangeText={value => this.onChangeText('password', value)}
-                    style={styles.input}
-                    secureTextEntry={true}
-                    placeholder='password'
-                />
-                <TextInput
-                    onChangeText={value => this.onChangeText('phoneNumber', value)}
-                    style={styles.input}
-                    placeholder='phone'
-                />
-                <TextInput
-                    onChangeText={value => this.onChangeText('email', value)}
-                    style={styles.input}
-                    placeholder='email'
-                />
-                <Button title="Sign Up" onPress={this.signUp.bind(this)} />
-                <TextInput
-                    onChangeText={value => this.onChangeText('confirmationCode', value)}
-                    style={styles.input}
-                    placeholder='confirmation code'
-                />
-                <Button title="Confirm Sign Up" onPress={this.confirmSignUp.bind(this)} />
+            <View>
+                <Text>
+                    This is just a test
+                </Text>
             </View>
         );
+
+        // return (
+        //     {/*<View style={styles.container}>*/}
+        //         {/*<TextInput*/}
+        //             {/*onChangeText={value => this.onChangeText('username', value)}*/}
+        //             {/*style={styles.input}*/}
+        //             {/*placeholder='username'*/}
+        //         {/*/>*/}
+        //         {/*<TextInput*/}
+        //             {/*onChangeText={value => this.onChangeText('password', value)}*/}
+        //             {/*style={styles.input}*/}
+        //             {/*secureTextEntry={true}*/}
+        //             {/*placeholder='password'*/}
+        //         {/*/>*/}
+        //         {/*<TextInput*/}
+        //             {/*onChangeText={value => this.onChangeText('phoneNumber', value)}*/}
+        //             {/*style={styles.input}*/}
+        //             {/*placeholder='phone'*/}
+        //         {/*/>*/}
+        //         {/*<TextInput*/}
+        //             {/*onChangeText={value => this.onChangeText('email', value)}*/}
+        //             {/*style={styles.input}*/}
+        //             {/*placeholder='email'*/}
+        //         {/*/>*/}
+        //         {/*<Button title="Sign Up" onPress={this.signUp.bind(this)} />*/}
+        //         {/*<TextInput*/}
+        //             {/*onChangeText={value => this.onChangeText('confirmationCode', value)}*/}
+        //             {/*style={styles.input}*/}
+        //             {/*placeholder='confirmation code'*/}
+        //         {/*/>*/}
+        //         {/*<Button title="Confirm Sign Up" onPress={this.confirmSignUp.bind(this)} />*/}
+        //     {/*</View>*/}
+        // );
     }
 }
 
