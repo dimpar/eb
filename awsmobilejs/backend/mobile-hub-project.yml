@@ -1,0 +1,80 @@
+--- !com.amazonaws.mobilehub.v0.Project 
+apps:
+  react-native: !com.amazonaws.mobilehub.v0.AppDO {}
+features:
+  cloudlogic: !com.amazonaws.mobilehub.v0.CloudLogic 
+    components:
+      eb: !com.amazonaws.mobilehub.v0.API 
+        attributes:
+          disable-aws-auth: false
+          name: eb
+          requires-signin: false
+          sdk-generation-stage-name: Development
+        paths:
+          /ebtest: !com.amazonaws.mobilehub.v0.Function 
+            codeFilename: uploads/getebs-20180326002653.zip
+            description: 'Handler for calls to resource path : /ebtest/{proxy+}'
+            environment: {}
+            handler: index.handler
+            hashcode: StOmbsYp08IY1tYXxdTkP4msHfAgSZ9qz4bJQS6nY4E=
+            memorySize: '128'
+            modified: '2018-03-26T06:27:10.058+0000'
+            name: getebs
+            runtime: nodejs6.10
+            timeout: '3'
+            version: rcIsxs1Juzyj4sanQpaquOC7_M.iMKMR
+          '/ebtest/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
+            codeFilename: uploads/getebs-20180326002653.zip
+            description: 'Handler for calls to resource path : /ebtest/{proxy+}'
+            environment: {}
+            handler: index.handler
+            hashcode: StOmbsYp08IY1tYXxdTkP4msHfAgSZ9qz4bJQS6nY4E=
+            memorySize: '128'
+            modified: '2018-03-26T06:27:10.058+0000'
+            name: getebs
+            runtime: nodejs6.10
+            timeout: '3'
+            version: dTi9peA45o8Yo74MDnbU0LXsCFo2fWtO
+  content-delivery: !com.amazonaws.mobilehub.v0.ContentDelivery 
+    attributes:
+      enabled: true
+      visibility: public-global
+    components:
+      release: !com.amazonaws.mobilehub.v0.Bucket {}
+  database: !com.amazonaws.mobilehub.v0.Database 
+    components:
+      database-nosql: !com.amazonaws.mobilehub.v0.NoSQLDatabase 
+        tables:
+          - !com.amazonaws.mobilehub.v0.NoSQLTable 
+            attributes:
+              category: S
+              description: S
+              userId: S
+            hashKeyName: userId
+            hashKeyType: S
+            rangeKeyName: ''
+            rangeKeyType: ''
+            tableName: ___DYNAMIC_PREFIX___-task
+            tablePrivacy: private
+  mobile-analytics: !com.amazonaws.mobilehub.v0.Pinpoint 
+    components:
+      analytics: !com.amazonaws.mobilehub.v0.PinpointAnalytics {}
+  sign-in: !com.amazonaws.mobilehub.v0.SignIn 
+    attributes:
+      enabled: true
+      optional-sign-in: false
+    components:
+      sign-in-user-pools: !com.amazonaws.mobilehub.v0.UserPoolsIdentityProvider 
+        attributes:
+          alias-attributes:
+            - email
+          mfa-configuration: OFF
+          name: userpool
+          password-policy: !com.amazonaws.mobilehub.ConvertibleMap 
+            min-length: '6'
+            require-lower-case: false
+            require-numbers: false
+            require-symbols: false
+            require-upper-case: false
+name: emberbee
+region: us-east-1
