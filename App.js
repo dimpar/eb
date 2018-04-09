@@ -44,7 +44,7 @@ export default class App extends React.Component {
         return (
             <View>
                 <Text>
-                    This is just a test
+                    This is just a test Hernandez!
                 </Text>
             </View>
         );
