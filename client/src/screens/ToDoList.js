@@ -1,8 +1,7 @@
 import React from "react";
 import {FlatList, StyleSheet, Text} from "react-native";
 import {List, ListItem} from "react-native-elements";
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import {colors, fonts} from "../theme";
+import Icon from '@expo/vector-icons/MaterialIcons';
 import AddToDo from "./AddToDo";
 
 export default class ToDoList extends React.Component {

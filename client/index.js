@@ -1,4 +1,4 @@
-import { AppRegistry } from 'react-native';
+import { registerRootComponent } from 'expo';
 import App from './App';
 import React from 'react'
 import 'expo'
@@ -23,4 +23,4 @@ const ReduxApp = () => (
     </Provider>
 );
 
-AppRegistry.registerComponent('main', () => ReduxApp);
+registerRootComponent(ReduxApp);

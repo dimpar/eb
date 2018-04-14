@@ -1,32 +1,29 @@
 {
   "name": "emberbee",
+  "main": "./index.js",
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
     "babel-jest": "22.1.0",
     "babel-preset-react-native": "4.0.0",
-    "jest-expo": "26.0.0",
+    "jest-expo": "^26.0.0",
     "react-native-scripts": "1.13.1",
     "react-test-renderer": "16.3.0-alpha.1"
   },
   "scripts": {
-    "start": "react-native-scripts start",
-    "eject": "react-native-scripts eject",
-    "android": "react-native-scripts android",
-    "ios": "react-native-scripts ios",
-    "test": "jest"
+    "test": "node ./node_modules/jest/bin/jest.js --watchAll"
   },
-  "main": "./index.js",
   "jest": {
     "preset": "jest-expo"
   },
   "dependencies": {
+    "@expo/vector-icons": "^6.1.0",
     "aws-amplify": "^0.2.14",
     "aws-amplify-react-native": "^0.2.7",
+    "babel-preset-expo": "^4.0.0",
     "expo": "^26.0.0",
     "react": "16.3.0-alpha.1",
     "react-native": "0.54.0",
-    "nvm": "0.0.4",
     "react-native-calendars": "^1.17.4",
     "react-native-elements": "^0.19.0",
     "react-native-swiper": "^1.5.13",
@@ -36,10 +33,5 @@
     "redux": "^3.7.2",
     "redux-persist": "^5.9.1",
     "redux-thunk": "^2.2.0"
-  },
-  "rnpm": {
-    "assets": [
-      "./src/assets/fonts"
-    ]
   }
 }

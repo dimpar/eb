@@ -4,7 +4,7 @@ import {
     TextInput
 } from 'react-native'
 
-import { colors, fonts } from '../theme'
+import { colors } from '../theme'
 
 export default ({ placeholder, onChangeText, type, ...props }) => (
     <TextInput
@@ -26,6 +26,6 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1.5,
         fontSize: 16,
         borderBottomColor: colors.fourth,
-        fontFamily: fonts.light
+        fontFamily: 'light'
     }
 })

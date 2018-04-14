@@ -5,14 +5,8 @@ const colors = {
     fourth: '#E0850A', // orange
     fifth: '#BABABA', // gray
     white: '#fff' // white
-}
-const fonts = {
-    hairline: 'Lato-Hairline',
-    light: 'Lato-Light',
-    base: 'Lato-Regular',
-    bold: 'Lato-Bold'
-}
+};
+
 export {
     colors,
-    fonts
 }

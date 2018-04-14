@@ -43,7 +43,7 @@ const styles = {
         backgroundColor:'transparent',
         fontSize: 18,
         textAlign: 'center',
-        fontFamily: fonts.base,
+        fontFamily: 'base',
         justifyContent: 'center',
         alignItems: 'center',
         fontWeight: 'bold'

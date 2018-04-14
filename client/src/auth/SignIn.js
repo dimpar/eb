@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
         fontSize: 12,
         marginTop: 10,
         color: 'transparent',
-        fontFamily: fonts.base
+        fontFamily: 'base'
     },
     inputContainer: {
         marginTop: 20
@@ -151,12 +151,12 @@ const styles = StyleSheet.create({
     greeting: {
         marginTop: 20,
         fontSize: 24,
-        fontFamily: fonts.light
+        fontFamily: 'light'
     },
     greeting2: {
         color: '#666',
         fontSize: 24,
         marginTop: 5,
-        fontFamily: fonts.light
+        fontFamily: 'light'
     }
 });

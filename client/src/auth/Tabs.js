@@ -49,7 +49,7 @@ const routeConfig = {
         inactiveTintColor: colors.secondary,
         indicatorStyle: { backgroundColor: colors.secondary },
         labelStyle: {
-            fontFamily: fonts.base,
+            fontFamily: 'base',
             fontSize: 12
         },
         style: {

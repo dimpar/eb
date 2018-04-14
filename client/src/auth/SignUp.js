@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {Image, Modal, StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux'
 
-import {fonts} from '../theme'
 import {confirmUserSignUp, createUser} from '../actions'
 
 import Input from '../components/Input'
@@ -14,10 +13,10 @@ const initialState = {
     email: '',
     phone_number: '',
     authCode: ''
-}
+};
 
 class SignUp extends Component<{}> {
-    state = initialState
+    state = initialState;
 
     onChangeText = (key, value) => {
         this.setState({
@@ -26,17 +25,17 @@ class SignUp extends Component<{}> {
     }
 
     signUp() {
-        const { username, password, email, phone_number } = this.state
+        const { username, password, email, phone_number } = this.state;
         this.props.dispatchCreateUser(username, password, email, phone_number)
     }
 
     confirm() {
-        const { authCode, username } = this.state
+        const { authCode, username } = this.state;
         this.props.dispatchConfirmUser(username, authCode)
     }
 
     componentWillReceiveProps(nextProps) {
-        const { auth: { showSignUpConfirmationModal }} = nextProps
+        const { auth: { showSignUpConfirmationModal }} = nextProps;
         if (!showSignUpConfirmationModal && this.props.auth.showSignUpConfirmationModal) {
             this.setState(initialState)
         }
@@ -127,12 +126,12 @@ class SignUp extends Component<{}> {
 
 const mapStateToProps = state => ({
     auth: state.auth
-})
+});
 
 const mapDispatchToProps = {
     dispatchConfirmUser: (username, authCode) => confirmUserSignUp(username, authCode),
     dispatchCreateUser: (username, password, email, phone_number) => createUser(username, password, email, phone_number)
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUp)
 
@@ -152,11 +151,11 @@ const styles = StyleSheet.create({
     },
     greeting: {
         marginTop: 20,
-        fontFamily: fonts.light,
+        fontFamily: 'light',
         fontSize: 24
     },
     greeting2: {
-        fontFamily: fonts.light,
+        fontFamily: 'light',
         color: '#666',
         fontSize: 24,
         marginTop: 5
@@ -169,7 +168,7 @@ const styles = StyleSheet.create({
         height: 38
     },
     errorMessage: {
-        fontFamily: fonts.base,
+        fontFamily: 'base',
         fontSize: 12,
         marginTop: 10,
         color: 'transparent'

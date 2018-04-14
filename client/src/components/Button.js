@@ -7,7 +7,7 @@ import {
     ActivityIndicator
 } from 'react-native'
 
-import { fonts, colors } from '../theme'
+import { colors } from '../theme'
 
 export default ({ title, onPress, isLoading }) => (
     <TouchableOpacity onPress={onPress}>
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         color: colors.fourth,
-        fontFamily: fonts.light,
+        fontFamily: 'light',
         fontSize: 22,
         letterSpacing: 0.5
     },
