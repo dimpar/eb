@@ -1,0 +1,19 @@
+{
+	"ProjectName": "eb",
+	"ProjectPath": "/Users/dmitry/projects/eb",
+	"InitializationTime": "2018-04-08-18-25-31",
+	"LastConfigurationTime": "2018-04-08-18-25-07",
+	"LastNPMInstallTime": "",
+	"FrontendLastBuildTime": "",
+	"LastPublishTime": "",
+	"BackendLastSyncTime": "2018-04-14-20-09-06",
+	"BackendLastBuildTime": "",
+	"BackendLastPushTime": "",
+	"BackendLastPushSuccessful": false,
+	"BackendProjectID": "8e32ca72-64df-4285-9732-b3a5345704f6",
+	"BackendProjectName": "emberbee",
+	"BackendProjectConsoleUrl": "https://console.aws.amazon.com/mobilehub/home#/8e32ca72-64df-4285-9732-b3a5345704f6/build",
+	"BackendProjectCreationTime": "2018-02-13T07:02:35.485Z",
+	"BackendProjectLastUpdatedTime": "2018-04-05T07:19:51.925Z",
+	"Framework": "react-native"
+}
