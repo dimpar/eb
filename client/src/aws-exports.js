@@ -8,7 +8,7 @@
 const awsmobile = {
     'aws_app_analytics': 'enable',
     'aws_cloud_logic': 'enable',
-    'aws_cloud_logic_custom': [{"id":"wp2i6fgto8","name":"eb","description":"","endpoint":"https://wp2i6fgto8.execute-api.us-east-1.amazonaws.com/Development","region":"us-east-1","paths":["/ebtest","/ebtest/123"]}],
+    'aws_cloud_logic_custom': [{"id":"9f8p1t3vgf","name":"tasks","description":"","endpoint":"https://9f8p1t3vgf.execute-api.us-east-1.amazonaws.com/Development","region":"us-east-1","paths":["/tasks","/tasks/123"]},{"id":"x8m4liori6","name":"tasksCRUD","description":"","endpoint":"https://x8m4liori6.execute-api.us-east-1.amazonaws.com/Development","region":"us-east-1","paths":["/tasks","/tasks/123"]}],
     'aws_cognito_identity_pool_id': 'us-east-1:6b99d246-ae47-42d1-8bfd-02036907260a',
     'aws_cognito_region': 'us-east-1',
     'aws_content_delivery': 'enable',
@@ -18,7 +18,7 @@ const awsmobile = {
     'aws_content_delivery_cloudfront_domain': 'dezo7f13qthyh.cloudfront.net',
     'aws_dynamodb': 'enable',
     'aws_dynamodb_all_tables_region': 'us-east-1',
-    'aws_dynamodb_table_schemas': [{"tableName":"emberbee-mobilehub-300109055-task","attributes":[{"name":"userId","type":"S"},{"name":"category","type":"S"},{"name":"description","type":"S"}],"indexes":[],"region":"us-east-1","hashKey":"userId"}],
+    'aws_dynamodb_table_schemas': [{"tableName":"emberbee-mobilehub-300109055-tasks","attributes":[{"name":"userId","type":"S"},{"name":"category","type":"S"},{"name":"name","type":"S"}],"indexes":[],"region":"us-east-1","hashKey":"userId"}],
     'aws_mandatory_sign_in': 'enable',
     'aws_mobile_analytics_app_id': '9f1b732e50a64490b9f1cdc80a329982',
     'aws_mobile_analytics_app_region': 'us-east-1',

@@ -37,6 +37,7 @@ class App extends React.Component {
                 const {user: {signInUserSession: {accessToken: {payload: {exp, iat}}}}} = Auth
                 if (iat < exp) loggedIn = true;
             }
+            // loggedIn = true;
             if (loggedIn) {
                 return (
                     <EbNav/>

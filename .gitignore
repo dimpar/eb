@@ -93,3 +93,4 @@ awsmobilejs/\#current-backend-info
 ~awsmobilejs-*/
 
 !/client/src/aws-exports.js
+/awsmobilejs/backend/mobile-hub-project.yml

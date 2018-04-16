@@ -10,7 +10,6 @@ import {
 import { connect } from 'react-redux'
 
 import { authenticate, confirmUserLogin } from '../actions'
-import { fonts, colors } from '../theme'
 
 import Input from '../components/Input'
 import Button from '../components/Button'
@@ -26,7 +25,7 @@ class SignIn extends Component<{}> {
         this.setState({
             [key]: value
         })
-    }
+    };
 
     signIn() {
         const { username, password } = this.state
