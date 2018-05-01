@@ -25,17 +25,16 @@ export default class AddToDo extends React.Component {
     async saveTask() {
         let newTask = {
             body: {
-                "category": "This is my second task",
-                "name": "My second task!",
-                "userId": "111"
+                "Description": "Call Bucktop!",
+                "Name": "My main task!"
             }
         };
 
-        const path = "/tasks";
+        const path = "/MyTasks";
 
         // Use the API module to save the task to the database
         try {
-            const apiResponse = await API.post("tasks", path, newTask)
+            const apiResponse = await API.post("MyTasksCRUD", path, newTask)
             console.log("response from saving note: ");
             console.log(apiResponse);
             // this.setState({apiResponse});

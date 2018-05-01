@@ -4,37 +4,99 @@ apps:
 features:
   cloudlogic: !com.amazonaws.mobilehub.v0.CloudLogic 
     components:
-      eb: !com.amazonaws.mobilehub.v0.API 
+      MyTasksCRUD: !com.amazonaws.mobilehub.v0.API 
         attributes:
-          disable-aws-auth: false
-          name: eb
+          name: MyTasksCRUD
           requires-signin: false
-          sdk-generation-stage-name: Development
         paths:
-          /ebtest: !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/getebs-20180326002653.zip
-            description: 'Handler for calls to resource path : /ebtest/{proxy+}'
+          /MyTasks: !com.amazonaws.mobilehub.v0.Function 
+            codeFilename: uploads/MyTasks-20180430163649.zip
+            description: 'Handler for calls to resource path : /MyTasks/{proxy+}'
+            enableCORS: true
             environment: {}
-            handler: index.handler
-            hashcode: StOmbsYp08IY1tYXxdTkP4msHfAgSZ9qz4bJQS6nY4E=
+            handler: lambda.handler
+            hashcode: 4xodAQXZMzMYCt7ri59mC7RVqdFJREeTiUhvo5In5Dw=
             memorySize: '128'
-            modified: '2018-03-26T06:27:10.058+0000'
-            name: getebs
+            modified: '2018-04-30T21:40:22.975+0000'
+            name: MyTasks
             runtime: nodejs6.10
             timeout: '3'
-            version: rcIsxs1Juzyj4sanQpaquOC7_M.iMKMR
-          '/ebtest/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/getebs-20180326002653.zip
-            description: 'Handler for calls to resource path : /ebtest/{proxy+}'
+            version: Ot3Hu0hTvgK3QrDkIP_m35y1.bg8tldL
+          '/MyTasks/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
+            codeFilename: uploads/MyTasks-20180430163649.zip
+            description: 'Handler for calls to resource path : /MyTasks/{proxy+}'
+            enableCORS: true
             environment: {}
-            handler: index.handler
-            hashcode: StOmbsYp08IY1tYXxdTkP4msHfAgSZ9qz4bJQS6nY4E=
+            handler: lambda.handler
+            hashcode: 4xodAQXZMzMYCt7ri59mC7RVqdFJREeTiUhvo5In5Dw=
             memorySize: '128'
-            modified: '2018-03-26T06:27:10.058+0000'
-            name: getebs
+            modified: '2018-04-30T21:40:22.975+0000'
+            name: MyTasks
             runtime: nodejs6.10
             timeout: '3'
-            version: dTi9peA45o8Yo74MDnbU0LXsCFo2fWtO
+            version: HBUPeyQtgNIW3c80n.DkFhLkkrAMWC.O
+      TasksCRUD: !com.amazonaws.mobilehub.v0.API 
+        attributes:
+          name: TasksCRUD
+          requires-signin: true
+        paths:
+          /Tasks: !com.amazonaws.mobilehub.v0.Function 
+            codeFilename: uploads/Tasks-20180428011108.zip
+            description: 'Handler for calls to resource path : /Tasks/{proxy+}'
+            enableCORS: true
+            environment: {}
+            handler: lambda.handler
+            hashcode: V+sv4HM8jprm+R6F+rx6Wv6NdeLcTuBuX6+1INUOCY8=
+            memorySize: '128'
+            modified: '2018-04-28T07:12:22.449+0000'
+            name: Tasks
+            runtime: nodejs6.10
+            timeout: '3'
+            version: hYZUfqYcEifo8lHpdu8S90GDkSEj0syX
+          '/Tasks/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
+            codeFilename: uploads/Tasks-20180428011108.zip
+            description: 'Handler for calls to resource path : /Tasks/{proxy+}'
+            enableCORS: true
+            environment: {}
+            handler: lambda.handler
+            hashcode: V+sv4HM8jprm+R6F+rx6Wv6NdeLcTuBuX6+1INUOCY8=
+            memorySize: '128'
+            modified: '2018-04-28T07:12:22.449+0000'
+            name: Tasks
+            runtime: nodejs6.10
+            timeout: '3'
+            version: xkZ1mLQiTVJiridok9.DIYIZ4D2f_msF
+      sampleCloudApi: !com.amazonaws.mobilehub.v0.API 
+        attributes:
+          name: sampleCloudApi
+          requires-signin: false
+        paths:
+          /items: !com.amazonaws.mobilehub.v0.Function 
+            codeFilename: uploads/sampleLambda-20180501001607.zip
+            description: 'Handler for calls to resource path : /items/{proxy+}'
+            enableCORS: true
+            environment: {}
+            handler: lambda.handler
+            hashcode: 3bu132nxYxrfPb5WHfP7TV2awMhgd/17COAPT5ITWV0=
+            memorySize: '128'
+            modified: '2018-05-01T05:20:06.339+0000'
+            name: sampleLambda
+            runtime: nodejs6.10
+            timeout: '3'
+            version: mndLYuEp4VjfgkMOM5p94KKn4CSFbU9C
+          '/items/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
+            codeFilename: uploads/sampleLambda-20180501001607.zip
+            description: 'Handler for calls to resource path : /items/{proxy+}'
+            enableCORS: true
+            environment: {}
+            handler: lambda.handler
+            hashcode: 3bu132nxYxrfPb5WHfP7TV2awMhgd/17COAPT5ITWV0=
+            memorySize: '128'
+            modified: '2018-05-01T05:20:06.339+0000'
+            name: sampleLambda
+            runtime: nodejs6.10
+            timeout: '3'
+            version: yhGJOHHVCT2IsgxIX3AtKd99gK7wRg6N
   content-delivery: !com.amazonaws.mobilehub.v0.ContentDelivery 
     attributes:
       enabled: true
@@ -47,14 +109,26 @@ features:
         tables:
           - !com.amazonaws.mobilehub.v0.NoSQLTable 
             attributes:
-              category: S
-              description: S
+              CreateDate: N
+              Description: S
+              Name: S
+              userId: S
+            hashKeyName: userId
+            hashKeyType: S
+            rangeKeyName: CreateDate
+            rangeKeyType: N
+            tableName: ___DYNAMIC_PREFIX___-Tasks
+            tablePrivacy: private
+          - !com.amazonaws.mobilehub.v0.NoSQLTable 
+            attributes:
+              Description: S
+              Name: S
               userId: S
             hashKeyName: userId
             hashKeyType: S
             rangeKeyName: ''
             rangeKeyType: ''
-            tableName: ___DYNAMIC_PREFIX___-task
+            tableName: ___DYNAMIC_PREFIX___-MyTasks
             tablePrivacy: private
   mobile-analytics: !com.amazonaws.mobilehub.v0.Pinpoint 
     components:
@@ -76,5 +150,8 @@ features:
             require-numbers: false
             require-symbols: false
             require-upper-case: false
-name: emberbee
+  user-files: !com.amazonaws.mobilehub.v0.UserFiles 
+    attributes:
+      enabled: true
+name: eb-2018-04-28-01-03-26
 region: us-east-1
