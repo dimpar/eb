@@ -3,6 +3,8 @@ import {FlatList, StyleSheet, Text} from "react-native";
 import {List, ListItem} from "react-native-elements";
 import Icon from '@expo/vector-icons/MaterialIcons';
 import AddToDo from "./AddToDo";
+import Button from "../components/Button";
+import { API } from 'aws-amplify';
 
 export default class ToDoList extends React.Component {
 
@@ -22,6 +24,18 @@ export default class ToDoList extends React.Component {
             error: null,
             refreshing: false
         };
+    }
+
+    async getTasks() {
+        const path = "/Task";
+        try {
+            const apiResponse = await API.get("TaskCRUD", path);
+            console.log("response from getting note: " + apiResponse);
+            console.log(apiResponse);
+            this.setState({apiResponse});
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     render() {
@@ -57,6 +71,10 @@ export default class ToDoList extends React.Component {
                         {/*<Text>Test</Text>*/}
                         {/*<Text onPress={() => this.props.navigation.navigate('SignUp')}>Sign up</Text>*/}
                     </Icon>
+
+
+
+                <Button title="Get Tasks" onPress={this.getTasks.bind(this)} />
             </List>
         )
     }

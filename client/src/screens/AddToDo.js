@@ -25,16 +25,22 @@ export default class AddToDo extends React.Component {
     async saveTask() {
         let newTask = {
             body: {
-                "Description": "Call Bucktop!",
-                "Name": "My main task!"
+                "createDate": "08-05-2018 23:32:12",
+                "description": "description task",
+                "name": "call bucktop"
             }
+            // body: {
+            //     "userId": "111",
+            //     "Description": "Call Thea!",
+            //     "Name": "My main task!",
+            // }
         };
 
-        const path = "/MyTasks";
+        const path = "/Task";
 
         // Use the API module to save the task to the database
         try {
-            const apiResponse = await API.post("MyTasksCRUD", path, newTask)
+            const apiResponse = await API.post("TaskCRUD", path, newTask)
             console.log("response from saving note: ");
             console.log(apiResponse);
             // this.setState({apiResponse});
@@ -44,10 +50,13 @@ export default class AddToDo extends React.Component {
     }
 
 
+
+
     render() {
 
         return (
             <View>
+
                 <View style={styles.inputContainer}>
                     <Input
                         placeholder="Task"
@@ -61,11 +70,8 @@ export default class AddToDo extends React.Component {
                     />
                 </View>
 
-                <Button
-                    title='Add'
-                    onChangeText={this.onChangeText}
-                    onPress={this.saveTask}
-                />
+                <Button title='Add' onPress={this.saveTask}/>
+
             </View>
         )
     }
