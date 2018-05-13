@@ -2,19 +2,22 @@ import {StyleSheet, View} from "react-native";
 import React from "react";
 import Input from "../components/Input";
 import Button from "../components/Button";
-import { API } from 'aws-amplify';
+import {connect} from "react-redux";
+import {createTask} from "../actions";
 
-export default class AddToDo extends React.Component {
+const initialState = {
+    Name: '',
+    Description: '',
+    createDate: ''
+};
 
+class AddToDo extends React.Component {
 
     state = {
+        ...initialState,
         apiResponse: null,
         userId: ''
     };
-
-    handleChangeTaskId = (event) => {
-        this.setState({userId: event});
-    }
 
     onChangeText = (key, value) => {
         this.setState({
@@ -23,59 +26,52 @@ export default class AddToDo extends React.Component {
     };
 
     async saveTask() {
-        let newTask = {
-            body: {
-                "createDate": "08-05-2018 23:32:12",
-                "description": "description task",
-                "name": "call bucktop"
-            }
-            // body: {
-            //     "userId": "111",
-            //     "Description": "Call Thea!",
-            //     "Name": "My main task!",
-            // }
-        };
+        var rightNow = new Date();
+        var now = rightNow.toISOString();
 
-        const path = "/Task";
-
-        // Use the API module to save the task to the database
-        try {
-            const apiResponse = await API.post("TaskCRUD", path, newTask)
-            console.log("response from saving note: ");
-            console.log(apiResponse);
-            // this.setState({apiResponse});
-        } catch (e) {
-            console.log(e);
-        }
+        console.log("this", this);
+        const { Description, Name} = this.state;
+        console.log("Description", Description);
+        console.log("Name", Name);
+        console.log("Now", now);
+        this.props.dispatchCreateTask(Description, Name, now)
     }
-
-
-
 
     render() {
 
         return (
             <View>
-
                 <View style={styles.inputContainer}>
                     <Input
-                        placeholder="Task"
-                        type='task'
+                        value={this.state.Name}
+                        placeholder="Name"
+                        type='Name'
                         onChangeText={this.onChangeText}
                     />
                     <Input
-                        placeholder="Category"
-                        type='category'
+                        value={this.state.Description}
+                        placeholder="Description"
+                        type='Description'
                         onChangeText={this.onChangeText}
                     />
                 </View>
 
-                <Button title='Add' onPress={this.saveTask}/>
+                <Button title='Add' onPress={this.saveTask.bind(this)}/>
 
             </View>
         )
     }
 }
+
+const mapStateToProps = state => ({
+    task: state.task
+});
+
+const mapDispatchToProps = {
+    dispatchCreateTask: (Description, Name, createDate) => createTask(Description, Name, createDate)
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddToDo)
 
 const styles = StyleSheet.create({
     inputContainer: {

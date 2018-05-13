@@ -17,7 +17,7 @@ import {
 } from './reducers/auth'
 
 import { Alert } from 'react-native'
-import { Auth } from 'aws-amplify'
+import { Auth, API } from 'aws-amplify'
 
 function signUp() {
     return {
@@ -197,5 +197,27 @@ function confirmSignUpFailure(error) {
     return {
         type: CONFIRM_SIGNUP_FAILURE,
         error
+    }
+}
+
+export function createTask(Description, Name, createDate) {
+    return async () => {
+        let newTask = {
+            body: {
+                "Description": Description,
+                "Name": Name,
+                "createDate": createDate
+            }
+        };
+
+        const path = "/Tasks";
+
+        try {
+            const apiResponse = await API.post("TasksCRUD", path, newTask);
+            console.log("response from saving a task in actions: ");
+            console.log(apiResponse);
+        } catch (e) {
+            console.log(e);
+        }
     }
 }

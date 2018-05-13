@@ -85,12 +85,12 @@ client/package-lock.json
 /coverage
 /third-party
 
+#/client/src/aws-exports.js
+#/awsmobilejs/backend/mobile-hub-project.yml
+
 #awsmobilejs
+appsync-info.json
 aws-info.json
 project-info.json
-awsmobilejs/.awsmobile/backend-build
-awsmobilejs/\#current-backend-info
-~awsmobilejs-*/
-
-!/client/src/aws-exports.js
+/awsmobilejs/.awsmobile/
 /awsmobilejs/backend/mobile-hub-project.yml

@@ -1,0 +1,21 @@
+{
+  "name": "eb",
+  "version": "1.0.0",
+  "description": "This project was bootstrapped with [Create React Native App](https://github.com/react-community/create-react-native-app).",
+  "main": "index.js",
+  "dependencies": {
+    "aws-amplify": "^0.3.3",
+    "awsmobile-cli": "^1.1.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git-codecommit.us-east-1.amazonaws.com/v1/repos/emberbee"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
