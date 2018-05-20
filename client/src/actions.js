@@ -16,8 +16,9 @@ import {
     CONFIRM_LOGIN_FAILURE
 } from './reducers/auth'
 
+
 import { Alert } from 'react-native'
-import { Auth, API } from 'aws-amplify'
+import { Auth } from 'aws-amplify'
 
 function signUp() {
     return {
@@ -165,17 +166,17 @@ function confirmLoginFailure() {
 
 export function confirmUserSignUp(username, authCode) {
     return (dispatch) => {
-        dispatch(confirmSignUp())
+        dispatch(confirmSignUp());
         Auth.confirmSignUp(username, authCode)
             .then(data => {
-                console.log('data from confirmSignUp: ', data)
-                dispatch(confirmSignUpSuccess())
+                console.log('data from confirmSignUp: ', data);
+                dispatch(confirmSignUpSuccess());
                 setTimeout(() => {
                     Alert.alert('Successfully Signed Up!', 'Please Sign')
                 }, 0)
             })
             .catch(err => {
-                console.log('error signing up: ', err)
+                console.log('error signing up: ', err);
                 dispatch(confirmSignUpFailure(err))
             });
     }
@@ -197,27 +198,5 @@ function confirmSignUpFailure(error) {
     return {
         type: CONFIRM_SIGNUP_FAILURE,
         error
-    }
-}
-
-export function createTask(Description, Name, createDate) {
-    return async () => {
-        let newTask = {
-            body: {
-                "Description": Description,
-                "Name": Name,
-                "createDate": createDate
-            }
-        };
-
-        const path = "/Tasks";
-
-        try {
-            const apiResponse = await API.post("TasksCRUD", path, newTask);
-            console.log("response from saving a task in actions: ");
-            console.log(apiResponse);
-        } catch (e) {
-            console.log(e);
-        }
     }
 }

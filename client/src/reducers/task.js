@@ -1,66 +1,41 @@
-export const LOG_IN = 'LOG_IN'
-export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS'
-export const LOG_IN_FAILURE = 'LOG_IN_FAILURE'
-export const LOG_OUT = 'LOG_OUT'
-
-export const SIGN_UP = 'SIGN_UP'
-export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS'
-export const SIGN_UP_FAILURE = 'SIGN_UP_FAILURE'
-
-//TODO: THIS IS A PARTIAL COPY OF AUTH.JS. WILL NEED TO MODIFY
+export const CONFIRM_CREATE_NEW_TASK = 'CONFIRM_CREATE_NEW_TASK'
+export const FAILURE_CREATE_NEW_TASK = 'FAILURE_CREATE_NEW_TASK'
+export const CONFIRM_GET_TASKS = 'CONFIRM_GET_TASKS'
+export const FAILURE_GET_TASKS = 'FAILURE_GET_TASKS'
 
 const initialState = {
-    isAuthenticating: false,
-    user: {},
-
-    signUpError: false,
-    signInError: false,
-
-    showSignUpConfirmationModal: false,
-    showSignInConfirmationModal: false,
-}
+    confirmCreatedTask: false,
+    failureCreatingTask: false,
+    confirmGetTasks: false,
+    failureGetTasks: false,
+};
 
 export default (state = initialState, action) => {
     switch(action.type) {
-        case SIGN_UP:
+        case CONFIRM_CREATE_NEW_TASK:
+            console.log("I am in task reducer CONFIRM_CREATE_NEW_TASK");
             return {
                 ...state,
-                isAuthenticating: true,
-            }
-        case SIGN_UP_SUCCESS:
+                confirmCreatedTask: true,
+            };
+        case FAILURE_CREATE_NEW_TASK:
+            console.log("I am in task reducer FAILURE_CREATE_NEW_TASK");
             return {
                 ...state,
-                isAuthenticating: false
-            }
-        case SIGN_UP_FAILURE:
+                failureCreatingTask: true
+            };
+        case CONFIRM_GET_TASKS:
+            console.log("I am in task reducer CONFIRM_GET_TASKS");
             return {
                 ...state,
-                isAuthenticating: false,
-                signUpError: true,
-                signUpErrorMessage: action.error.message
-            }
-        case LOG_IN:
+                confirmGetTasks: true,
+            };
+        case FAILURE_GET_TASKS:
+            console.log("I am in task reducer FAILURE_GET_TASKS");
             return {
                 ...state,
-                isAuthenticating: true,
-                signInError: false
-            }
-        case LOG_IN_SUCCESS:
-            return {
-                isAuthenticating: false,
-                user: action.user,
-                showSignInConfirmationModal: true
-            }
-        case LOG_IN_FAILURE:
-            return {
-                ...state,
-                isAuthenticating: false,
-                signInError: true,
-                signInErrorMessage: action.error.message
-            }
-
-        case LOG_OUT:
-            return initialState
+                failureGetTasks: true
+            };
         default:
             return state
     }

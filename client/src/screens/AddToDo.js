@@ -1,15 +1,18 @@
-import {StyleSheet, View} from "react-native";
+import {StyleSheet, Text, View} from "react-native";
 import React from "react";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import {connect} from "react-redux";
-import {createTask} from "../actions";
+import {createTask} from "../actions/task";
 
 const initialState = {
     Name: '',
     Description: '',
     createDate: ''
 };
+
+//TODO: after adding a task, navigate to a task list, display a message that the task was added
+//TODO: and retrieve all tasks again.
 
 class AddToDo extends React.Component {
 
@@ -39,6 +42,13 @@ class AddToDo extends React.Component {
 
     render() {
 
+        const { task: {
+            confirmCreatedTask,
+            failureCreatingTask
+        }} = this.props;
+
+        console.log("this.props: ", this.props);
+
         return (
             <View>
                 <View style={styles.inputContainer}>
@@ -57,6 +67,9 @@ class AddToDo extends React.Component {
                 </View>
 
                 <Button title='Add' onPress={this.saveTask.bind(this)}/>
+
+                <Text>Was task created successfully ? {confirmCreatedTask? 'true': 'false'} </Text>
+                <Text>Was there an error? {failureCreatingTask? 'true': 'false'} </Text>
 
             </View>
         )

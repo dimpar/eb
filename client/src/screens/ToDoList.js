@@ -3,22 +3,16 @@ import {FlatList, StyleSheet, Text} from "react-native";
 import {List, ListItem} from "react-native-elements";
 import Icon from '@expo/vector-icons/MaterialIcons';
 import AddToDo from "./AddToDo";
-import Button from "../components/Button";
-import { API } from 'aws-amplify';
+import {getTasks} from "../actions/task";
+import {connect} from "react-redux";
 
-export default class ToDoList extends React.Component {
+class ToDoList extends React.Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
             loading: false,
-            data: [
-                {id: 1, task: 'clean up the living room', category: 'home'},
-                {id: 2, task: 'call Bucktop', category: 'work'},
-                {id: 3, task: 'call Thea', category: 'work'},
-                {id: 4, task: 'buy some food', category: 'home'}
-                ],
             page: 1,
             seed: 1,
             error: null,
@@ -26,16 +20,11 @@ export default class ToDoList extends React.Component {
         };
     }
 
-    async getTasks() {
-        const path = "/Task";
-        try {
-            const apiResponse = await API.get("TaskCRUD", path);
-            console.log("response from getting note: " + apiResponse);
-            console.log(apiResponse);
-            this.setState({apiResponse});
-        } catch (e) {
-            console.log(e);
-        }
+    componentWillMount(){
+        this.props.dispatchGetTasks().then(tasks => {
+            console.log("show me tasks", tasks);
+            this.setState({data: tasks});
+        });
     }
 
     render() {
@@ -46,6 +35,12 @@ export default class ToDoList extends React.Component {
             },
         });
 
+        const { task: {
+            confirmGetTasks,
+            failureGetTasks
+        }} = this.props;
+
+        console.log("ToDoList state", this.state);
         return (
             <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
                 <FlatList
@@ -53,12 +48,12 @@ export default class ToDoList extends React.Component {
                     renderItem={({ item }) => (
                         <ListItem
                             roundAvatar
-                            title={`${item.task}`}
-                            subtitle={item.category}
+                            title={`${item.Name}`}
+                            subtitle={item.Description}
                             containerStyle={{ borderBottomWidth: 0 }}
                         />
                     )}
-                    keyExtractor={item => item.id}
+                    keyExtractor={item => item.createDate}
                     // ItemSeparatorComponent={this.renderSeparator}
                     // ListHeaderComponent={this.renderHeader}
                     // ListFooterComponent={this.renderFooter}
@@ -67,15 +62,21 @@ export default class ToDoList extends React.Component {
                     // onEndReached={this.handleLoadMore}
                     // onEndReachedThreshold={50}
                 />
-                    <Icon name="add" size={20} style={styles.add} onPress={() => this.props.navigation.navigate('AddToDo')}>
-                        {/*<Text>Test</Text>*/}
-                        {/*<Text onPress={() => this.props.navigation.navigate('SignUp')}>Sign up</Text>*/}
-                    </Icon>
+                <Icon name="add" size={20} style={styles.add} onPress={() => this.props.navigation.navigate('AddToDo')}/>
 
-
-
-                <Button title="Get Tasks" onPress={this.getTasks.bind(this)} />
+                <Text>Was getting tasks successful ? {confirmGetTasks? 'true': 'false'} </Text>
+                <Text>Was there an error? {failureGetTasks? 'true': 'false'} </Text>
             </List>
         )
     }
 }
+
+const mapStateToProps = state => ({
+    task: state.task
+});
+
+const mapDispatchToProps = {
+    dispatchGetTasks: () => getTasks()
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ToDoList)
