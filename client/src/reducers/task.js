@@ -2,6 +2,7 @@ export const CONFIRM_CREATE_NEW_TASK = 'CONFIRM_CREATE_NEW_TASK'
 export const FAILURE_CREATE_NEW_TASK = 'FAILURE_CREATE_NEW_TASK'
 export const CONFIRM_GET_TASKS = 'CONFIRM_GET_TASKS'
 export const FAILURE_GET_TASKS = 'FAILURE_GET_TASKS'
+export const RESET_CREATE_NEW_TASK = 'RESET_CREATE_NEW_TASK'
 
 const initialState = {
     confirmCreatedTask: false,
@@ -35,6 +36,12 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 failureGetTasks: true
+            };
+        case RESET_CREATE_NEW_TASK:
+            console.log("I am in task reducer RESET_CREATE_NEW_TASK");
+            return {
+                ...state,
+                confirmCreatedTask: false,
             };
         default:
             return state

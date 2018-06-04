@@ -4,7 +4,8 @@ import {
     CONFIRM_CREATE_NEW_TASK,
     FAILURE_CREATE_NEW_TASK,
     CONFIRM_GET_TASKS,
-    FAILURE_GET_TASKS
+    FAILURE_GET_TASKS,
+    RESET_CREATE_NEW_TASK
 } from '../reducers/task'
 
 export function createTask(Description, Name, createDate) {
@@ -32,6 +33,12 @@ export function createTask(Description, Name, createDate) {
             dispatch(failureCreatingNewTask());
             console.log(e);
         }
+    }
+}
+
+export function resetCreateTask() {
+    return (dispatch) => {
+        dispatch(resetCreateNewTask());
     }
 }
 
@@ -75,6 +82,12 @@ function failureGetTasks() {
 function confirmCreateNewTask() {
     return {
         type: CONFIRM_CREATE_NEW_TASK
+    }
+}
+
+function resetCreateNewTask() {
+    return {
+        type: RESET_CREATE_NEW_TASK
     }
 }
 

@@ -48,6 +48,7 @@ class SignUp extends Component<{}> {
             signUpError,
             signUpErrorMessage
         }} = this.props
+
         return (
             <View style={styles.container}>
                 <View style={styles.heading}>

@@ -6,6 +6,7 @@ import AddToDo from "./AddToDo";
 import {getTasks} from "../actions/task";
 import {connect} from "react-redux";
 
+//TODO: after adding a task, navigate to a task list, display a message that the task was added
 class ToDoList extends React.Component {
 
     constructor(props) {
@@ -16,16 +17,18 @@ class ToDoList extends React.Component {
             page: 1,
             seed: 1,
             error: null,
-            refreshing: false
+            refresh: false,
         };
-    }
 
-    componentWillMount(){
         this.props.dispatchGetTasks().then(tasks => {
-            console.log("show me tasks", tasks);
             this.setState({data: tasks});
         });
     }
+
+    onTaskAdd = newTask => {
+        this.state.data.push(newTask);
+        this.state.refresh = true;
+    };
 
     render() {
         const styles = StyleSheet.create({
@@ -45,10 +48,11 @@ class ToDoList extends React.Component {
             <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
                 <FlatList
                     data={this.state.data}
+                    extraData={this.state.refresh}
                     renderItem={({ item }) => (
                         <ListItem
                             roundAvatar
-                            title={`${item.Name}`}
+                            title={item.Name}
                             subtitle={item.Description}
                             containerStyle={{ borderBottomWidth: 0 }}
                         />
@@ -62,10 +66,11 @@ class ToDoList extends React.Component {
                     // onEndReached={this.handleLoadMore}
                     // onEndReachedThreshold={50}
                 />
-                <Icon name="add" size={20} style={styles.add} onPress={() => this.props.navigation.navigate('AddToDo')}/>
 
+                <Icon name="add" size={20} style={styles.add} onPress={() => this.props.navigation.navigate('AddToDo', { onTaskAdd: this.onTaskAdd })}/>
                 <Text>Was getting tasks successful ? {confirmGetTasks? 'true': 'false'} </Text>
                 <Text>Was there an error? {failureGetTasks? 'true': 'false'} </Text>
+                {/*{alert("my alert")}*/}
             </List>
         )
     }
