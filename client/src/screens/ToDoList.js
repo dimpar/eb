@@ -6,7 +6,6 @@ import AddToDo from "./AddToDo";
 import {getTasks} from "../actions/task";
 import {connect} from "react-redux";
 
-//TODO: after adding a task, navigate to a task list, display a message that the task was added
 class ToDoList extends React.Component {
 
     constructor(props) {
@@ -25,6 +24,7 @@ class ToDoList extends React.Component {
         });
     }
 
+    //TODO: possibly use setState - better practice?
     onTaskAdd = newTask => {
         this.state.data.push(newTask);
         this.state.refresh = true;
@@ -40,10 +40,17 @@ class ToDoList extends React.Component {
 
         const { task: {
             confirmGetTasks,
-            failureGetTasks
+            failureGetTasks,
+            confirmCreatedTask,
+            failureCreatingTask
         }} = this.props;
 
         console.log("ToDoList state", this.state);
+
+        if (confirmCreatedTask && !failureCreatingTask) {
+            alert("Your task has been added!")
+        }
+
         return (
             <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
                 <FlatList
@@ -70,7 +77,7 @@ class ToDoList extends React.Component {
                 <Icon name="add" size={20} style={styles.add} onPress={() => this.props.navigation.navigate('AddToDo', { onTaskAdd: this.onTaskAdd })}/>
                 <Text>Was getting tasks successful ? {confirmGetTasks? 'true': 'false'} </Text>
                 <Text>Was there an error? {failureGetTasks? 'true': 'false'} </Text>
-                {/*{alert("my alert")}*/}
+
             </List>
         )
     }
@@ -81,7 +88,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-    dispatchGetTasks: () => getTasks()
+    dispatchGetTasks: () => getTasks(),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ToDoList)
