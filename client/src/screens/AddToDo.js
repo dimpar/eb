@@ -43,7 +43,7 @@ class AddToDo extends React.Component {
             navigation.state.params.onTaskAdd(this.state.newTask);
         }
 
-        return navigation.goBack();
+        navigation.goBack();
     }
 
     render() {
@@ -54,7 +54,8 @@ class AddToDo extends React.Component {
 
         if (confirmCreatedTask && !failureCreatingTask) {
             this.props.dispatchResetCreateTask();
-            return this.goBack();
+            this.goBack();
+            return null;
         } else {
             return (
                 <View>

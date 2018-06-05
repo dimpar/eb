@@ -1,6 +1,6 @@
 import React from "react";
 import {colors} from '../theme'
-import {StackNavigator} from "react-navigation";
+import {createStackNavigator} from "react-navigation";
 import ToDoList from "../screens/ToDoList";
 import AddToDo from "../screens/AddToDo";
 
@@ -33,4 +33,4 @@ const routeConfig = {
     initialRouteName: 'ToDoList',
 }
 
-export default StackNavigator(routes, routeConfig);
+export default createStackNavigator(routes, routeConfig);

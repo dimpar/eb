@@ -2,7 +2,7 @@ import React from "react";
 import AuthHome from "../screens/AuthHome";
 import {colors} from '../theme'
 import SignUp from "../auth/SignUp";
-import {StackNavigator} from "react-navigation";
+import {createStackNavigator} from "react-navigation";
 import SignIn from "../auth/SignIn";
 
 const routes = {
@@ -44,4 +44,4 @@ const routeConfig = {
     initialRouteName: 'AuthHome',
 }
 
-export default StackNavigator(routes, routeConfig);
+export default createStackNavigator(routes, routeConfig);
