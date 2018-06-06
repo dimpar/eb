@@ -4,99 +4,38 @@ apps:
 features:
   cloudlogic: !com.amazonaws.mobilehub.v0.CloudLogic 
     components:
-      MyTasksCRUD: !com.amazonaws.mobilehub.v0.API 
-        attributes:
-          name: MyTasksCRUD
-          requires-signin: false
-        paths:
-          /MyTasks: !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/MyTasks-20180430163649.zip
-            description: 'Handler for calls to resource path : /MyTasks/{proxy+}'
-            enableCORS: true
-            environment: {}
-            handler: lambda.handler
-            hashcode: 4xodAQXZMzMYCt7ri59mC7RVqdFJREeTiUhvo5In5Dw=
-            memorySize: '128'
-            modified: '2018-04-30T21:40:22.975+0000'
-            name: MyTasks
-            runtime: nodejs6.10
-            timeout: '3'
-            version: Ot3Hu0hTvgK3QrDkIP_m35y1.bg8tldL
-          '/MyTasks/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/MyTasks-20180430163649.zip
-            description: 'Handler for calls to resource path : /MyTasks/{proxy+}'
-            enableCORS: true
-            environment: {}
-            handler: lambda.handler
-            hashcode: 4xodAQXZMzMYCt7ri59mC7RVqdFJREeTiUhvo5In5Dw=
-            memorySize: '128'
-            modified: '2018-04-30T21:40:22.975+0000'
-            name: MyTasks
-            runtime: nodejs6.10
-            timeout: '3'
-            version: HBUPeyQtgNIW3c80n.DkFhLkkrAMWC.O
       TasksCRUD: !com.amazonaws.mobilehub.v0.API 
         attributes:
           name: TasksCRUD
           requires-signin: true
+          sdk-generation-stage-name: Development
         paths:
           /Tasks: !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/Tasks-20180428011108.zip
+            codeFilename: uploads/Tasks-20180512150111.zip
             description: 'Handler for calls to resource path : /Tasks/{proxy+}'
             enableCORS: true
             environment: {}
             handler: lambda.handler
-            hashcode: V+sv4HM8jprm+R6F+rx6Wv6NdeLcTuBuX6+1INUOCY8=
+            hashcode: jXl+CrVlheqfrcCt7V0MTsCYZYFszxf4TAti/TvXTdU=
             memorySize: '128'
-            modified: '2018-04-28T07:12:22.449+0000'
+            modified: '2018-05-12T21:02:10.410+0000'
             name: Tasks
             runtime: nodejs6.10
             timeout: '3'
-            version: hYZUfqYcEifo8lHpdu8S90GDkSEj0syX
+            version: dd_JBauS_YKXGDJrc0cuUYPrVK_aBLGA
           '/Tasks/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/Tasks-20180428011108.zip
+            codeFilename: uploads/Tasks-20180512150111.zip
             description: 'Handler for calls to resource path : /Tasks/{proxy+}'
             enableCORS: true
             environment: {}
             handler: lambda.handler
-            hashcode: V+sv4HM8jprm+R6F+rx6Wv6NdeLcTuBuX6+1INUOCY8=
+            hashcode: jXl+CrVlheqfrcCt7V0MTsCYZYFszxf4TAti/TvXTdU=
             memorySize: '128'
-            modified: '2018-04-28T07:12:22.449+0000'
+            modified: '2018-05-12T21:02:10.410+0000'
             name: Tasks
             runtime: nodejs6.10
             timeout: '3'
-            version: xkZ1mLQiTVJiridok9.DIYIZ4D2f_msF
-      sampleCloudApi: !com.amazonaws.mobilehub.v0.API 
-        attributes:
-          name: sampleCloudApi
-          requires-signin: false
-        paths:
-          /items: !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/sampleLambda-20180501001607.zip
-            description: 'Handler for calls to resource path : /items/{proxy+}'
-            enableCORS: true
-            environment: {}
-            handler: lambda.handler
-            hashcode: 3bu132nxYxrfPb5WHfP7TV2awMhgd/17COAPT5ITWV0=
-            memorySize: '128'
-            modified: '2018-05-01T05:20:06.339+0000'
-            name: sampleLambda
-            runtime: nodejs6.10
-            timeout: '3'
-            version: mndLYuEp4VjfgkMOM5p94KKn4CSFbU9C
-          '/items/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/sampleLambda-20180501001607.zip
-            description: 'Handler for calls to resource path : /items/{proxy+}'
-            enableCORS: true
-            environment: {}
-            handler: lambda.handler
-            hashcode: 3bu132nxYxrfPb5WHfP7TV2awMhgd/17COAPT5ITWV0=
-            memorySize: '128'
-            modified: '2018-05-01T05:20:06.339+0000'
-            name: sampleLambda
-            runtime: nodejs6.10
-            timeout: '3'
-            version: yhGJOHHVCT2IsgxIX3AtKd99gK7wRg6N
+            version: dotuWs_5Zzs9.0PKEbpG09BkibcXOEdZ
   content-delivery: !com.amazonaws.mobilehub.v0.ContentDelivery 
     attributes:
       enabled: true
@@ -109,26 +48,15 @@ features:
         tables:
           - !com.amazonaws.mobilehub.v0.NoSQLTable 
             attributes:
-              CreateDate: N
               Description: S
               Name: S
+              createDate: S
               userId: S
             hashKeyName: userId
             hashKeyType: S
-            rangeKeyName: CreateDate
-            rangeKeyType: N
+            rangeKeyName: createDate
+            rangeKeyType: S
             tableName: ___DYNAMIC_PREFIX___-Tasks
-            tablePrivacy: private
-          - !com.amazonaws.mobilehub.v0.NoSQLTable 
-            attributes:
-              Description: S
-              Name: S
-              userId: S
-            hashKeyName: userId
-            hashKeyType: S
-            rangeKeyName: ''
-            rangeKeyType: ''
-            tableName: ___DYNAMIC_PREFIX___-MyTasks
             tablePrivacy: private
   mobile-analytics: !com.amazonaws.mobilehub.v0.Pinpoint 
     components:
