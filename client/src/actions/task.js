@@ -5,7 +5,10 @@ import {
     FAILURE_CREATE_NEW_TASK,
     CONFIRM_GET_TASKS,
     FAILURE_GET_TASKS,
-    RESET_CREATE_NEW_TASK
+    RESET_CREATE_NEW_TASK,
+    CONFIRM_DELETE_TASK,
+    FAILURE_DELETE_TASK,
+    RESET_DELETE_TASK
 } from '../reducers/task'
 
 export function createTask(Description, Name, createDate) {
@@ -63,9 +66,29 @@ export function getTasks() {
     }
 }
 
-//TODO: add delete tasks functionality
+export function deleteTask(createDate) {
+    return async (dispatch) => {
+        console.log("createDate", createDate);
+        const path = "/Tasks/object/" + createDate;
+        try {
+            const apiResponse = await API.del("TasksCRUD", path);
+            if (apiResponse.error) {
+                dispatch(failureDeleteTask())
+            } else {
+                dispatch(confirmDeleteTask())
+            }
+        } catch (e) {
+            dispatch(failureDeleteTask());
+            console.log(e);
+        }
+    }
+}
 
-//TODO: add update tasks functionality
+export function resetDeleteTask() {
+    return async (dispatch) => {
+        dispatch(resetDeleteTask());
+    }
+}
 
 function confirmGetTasks() {
     return {
@@ -94,5 +117,23 @@ function resetCreateNewTask() {
 function failureCreatingNewTask() {
     return {
         type: FAILURE_CREATE_NEW_TASK
+    }
+}
+
+function confirmDeleteTask() {
+    return {
+        type: CONFIRM_DELETE_TASK
+    }
+}
+
+function failureDeleteTask() {
+    return {
+        type: FAILURE_DELETE_TASK
+    }
+}
+
+function resetDeleteTask() {
+    return {
+        type: RESET_DELETE_TASK
     }
 }

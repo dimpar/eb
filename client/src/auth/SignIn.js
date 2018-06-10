@@ -28,13 +28,12 @@ class SignIn extends Component<{}> {
     };
 
     signIn() {
-        const { username, password } = this.state
-        console.log("SignIn: signIn", username, password)
+        const { username, password } = this.state;
         this.props.dispatchAuthenticate(username, password)
     }
 
     confirm() {
-        const { authCode } = this.state
+        const { authCode } = this.state;
         this.props.dispatchConfirmUserLogin(authCode)
     }
 

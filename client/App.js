@@ -19,7 +19,6 @@ class App extends React.Component {
         StatusBar.setHidden(true);
     }
 
-
     render() {
         if (!this.state.isLoadingComplete) {
             return (

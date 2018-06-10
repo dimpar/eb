@@ -1,8 +1,8 @@
-import {StyleSheet, Text, View} from "react-native";
+import {StyleSheet, View} from "react-native";
 import React from "react";
 import Input from "../components/Input";
-import Button from "../components/Button";
 import {connect} from "react-redux";
+import Icon from '@expo/vector-icons/Entypo';
 import {createTask, resetCreateTask} from "../actions/task";
 
 const initialState = {
@@ -13,6 +13,21 @@ const initialState = {
 
 
 class AddToDo extends React.Component {
+
+    //is there a better way to go back to ToDoList?
+    //we execute this function every time we type (create) a new task
+    componentDidUpdate() {
+        const { task: {
+            confirmCreatedTask,
+            failureCreatingTask
+        }} = this.props;
+
+        if (confirmCreatedTask && !failureCreatingTask) {
+            this.props.dispatchResetCreateTask();
+            this.goBack();
+        }
+    }
+
     state = {
         ...initialState,
         apiResponse: null,
@@ -27,7 +42,7 @@ class AddToDo extends React.Component {
 
     async saveTask() {
         var rightNow = new Date();
-        var now = rightNow.toISOString();
+        var now = rightNow.toISOString().replace(/:/g, '-');
         const { Description, Name} = this.state;
         this.state.newTask = {
             createDate: now,
@@ -47,42 +62,27 @@ class AddToDo extends React.Component {
     }
 
     render() {
-        const { task: {
-            confirmCreatedTask,
-            failureCreatingTask
-        }} = this.props;
-
-        if (confirmCreatedTask && !failureCreatingTask) {
-            this.props.dispatchResetCreateTask();
-            this.goBack();
-            return null;
-        } else {
-            return (
-                <View>
-                    <View style={styles.inputContainer}>
-                        <Input
-                            value={this.state.Name}
-                            placeholder="Name"
-                            type='Name'
-                            onChangeText={this.onChangeText}
-                        />
-                        <Input
-                            value={this.state.Description}
-                            placeholder="Description"
-                            type='Description'
-                            onChangeText={this.onChangeText}
-                        />
-                    </View>
-
-                    <Button title='Add' onPress={this.saveTask.bind(this)}/>
-
-                    <Text>Was task created successfully ? {confirmCreatedTask? 'true': 'false'} </Text>
-                    <Text>Was there an error? {failureCreatingTask? 'true': 'false'} </Text>
-
+        return (
+            <View>
+                <View style={styles.inputContainer}>
+                    <Input
+                        value={this.state.Name}
+                        placeholder="Name"
+                        type='Name'
+                        onChangeText={this.onChangeText}
+                    />
+                    <Input
+                        value={this.state.Description}
+                        placeholder="Description"
+                        type='Description'
+                        onChangeText={this.onChangeText}
+                    />
                 </View>
-            )
 
-        }
+                <Icon name='add-to-list' onPress={() => this.saveTask()}/>
+            </View>
+        )
+
     }
 }
 

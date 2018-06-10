@@ -1,11 +1,14 @@
 import React from "react";
-import {FlatList, StyleSheet, Text} from "react-native";
+import {FlatList, StyleSheet} from "react-native";
 import {List, ListItem} from "react-native-elements";
 import Icon from '@expo/vector-icons/MaterialIcons';
 import AddToDo from "./AddToDo";
-import {getTasks} from "../actions/task";
+import {deleteTask, getTasks, resetDeleteTask} from "../actions/task";
 import {connect} from "react-redux";
 
+//TODO: add edit functionality
+
+//TODO: clean up UI
 class ToDoList extends React.Component {
 
     constructor(props) {
@@ -19,16 +22,40 @@ class ToDoList extends React.Component {
             refresh: false,
         };
 
+        this.getTasks()
+    }
+
+    onTaskAdd = newTask => {
+        var updatedTaskList = this.state.data;
+        updatedTaskList.push(newTask);
+        this.setState({data: updatedTaskList});
+        this.state.refresh = true;
+    };
+
+    getTasks = () => {
         this.props.dispatchGetTasks().then(tasks => {
             this.setState({data: tasks});
         });
-    }
-
-    //TODO: possibly use setState - better practice?
-    onTaskAdd = newTask => {
-        this.state.data.push(newTask);
-        this.state.refresh = true;
     };
+
+    deleteTask = (createDate) => {
+        this.props.dispatchDeleteTask(createDate)
+    };
+
+    //keep in mind that this will be executed on every component update
+    componentDidUpdate() {
+        const { task: {
+            confirmDeletedTask,
+            failureDeletingTask
+        }} = this.props;
+
+        if (confirmDeletedTask && !failureDeletingTask) {
+            this.state.refresh = false;
+            alert("Your task has been deleted!");
+            this.props.dispatchResetDeleteTask();
+            this.getTasks();
+        }
+    }
 
     render() {
         const styles = StyleSheet.create({
@@ -39,16 +66,13 @@ class ToDoList extends React.Component {
         });
 
         const { task: {
-            confirmGetTasks,
-            failureGetTasks,
             confirmCreatedTask,
-            failureCreatingTask
+            failureCreatingTask,
         }} = this.props;
 
-        console.log("ToDoList state", this.state);
-
         if (confirmCreatedTask && !failureCreatingTask) {
-            alert("Your task has been added!")
+            this.state.refresh = false;
+            alert("Your task has been added!");
         }
 
         return (
@@ -62,6 +86,9 @@ class ToDoList extends React.Component {
                             title={item.Name}
                             subtitle={item.Description}
                             containerStyle={{ borderBottomWidth: 0 }}
+                            rightIcon={
+                                <Icon name={'delete-forever'} size={20} onPress={() => this.deleteTask(item.createDate)}/>
+                            }
                         />
                     )}
                     keyExtractor={item => item.createDate}
@@ -75,8 +102,6 @@ class ToDoList extends React.Component {
                 />
 
                 <Icon name="add" size={20} style={styles.add} onPress={() => this.props.navigation.navigate('AddToDo', { onTaskAdd: this.onTaskAdd })}/>
-                <Text>Was getting tasks successful ? {confirmGetTasks? 'true': 'false'} </Text>
-                <Text>Was there an error? {failureGetTasks? 'true': 'false'} </Text>
 
             </List>
         )
@@ -89,6 +114,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
     dispatchGetTasks: () => getTasks(),
+    dispatchDeleteTask: (createDate) => deleteTask(createDate),
+    dispatchResetDeleteTask: () => resetDeleteTask()
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ToDoList)
