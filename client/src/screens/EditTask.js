@@ -2,27 +2,42 @@ import React from "react";
 import {StyleSheet, Text, View} from "react-native";
 import Input from "../components/Input";
 import {connect} from "react-redux";
+import Icon from '@expo/vector-icons/Entypo';
 
 class EditTask extends React.Component {
 
+    componentDidMount() {
+        console.log("this.props11", this.props)
+    }
+
+    //TODO: add edit functionality (update in db) and navigate back to the task list
     render() {
+
+        const { navigation: {
+            state: {
+                params
+            }
+        }} = this.props;
+
         return (
             <View>
                 <View style={styles.inputContainer}>
-                    <Text>This is EditTask</Text>
-                    {/*<Input*/}
-                        {/*value={this.state.Name}*/}
-                        {/*placeholder="Name"*/}
-                        {/*type='Name'*/}
-                        {/*onChangeText={this.onChangeText}*/}
-                    {/*/>*/}
-                    {/*<Input*/}
-                        {/*value={this.state.Description}*/}
-                        {/*placeholder="Description"*/}
-                        {/*type='Description'*/}
-                        {/*onChangeText={this.onChangeText}*/}
-                    {/*/>*/}
+                    <Text>Edit your task</Text>
+                    <Input
+                        value={params.name}
+                        placeholder="Name"
+                        type='Name'
+                        onChangeText={this.onChangeText}
+                    />
+                    <Input
+                        value={params.description}
+                        placeholder="Description"
+                        type='Description'
+                        onChangeText={this.onChangeText}
+                    />
                 </View>
+
+                <Icon name="edit" size={20} style={styles.add} onPress={() => alert('update')}/>
 
             </View>
         )

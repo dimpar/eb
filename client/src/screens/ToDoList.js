@@ -90,7 +90,7 @@ class ToDoList extends React.Component {
                             rightIcon={
                                 <Icon name={'delete-forever'} size={20} onPress={() => this.deleteTask(item.createDate)}/>
                             }
-                            onPress={() => this.props.navigation.navigate('EditTask')}
+                            onPress={() => this.props.navigation.navigate('EditTask', {name: item.Name, description: item.Description})}
                         />
                     )}
                     keyExtractor={item => item.createDate}
