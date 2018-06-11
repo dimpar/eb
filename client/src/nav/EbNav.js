@@ -3,18 +3,25 @@ import {colors} from '../theme'
 import {createStackNavigator} from "react-navigation";
 import ToDoList from "../screens/ToDoList";
 import AddToDo from "../screens/AddToDo";
+import EditTask from "../screens/EditTask";
 
 const routes = {
     ToDoList: {
         screen: ToDoList,
         navigationOptions: {
-            title: 'ToDo list'
+            title: 'Tasks list'
         }
     },
     AddToDo: {
         screen: AddToDo,
         navigationOptions: {
             title: 'Add to my list'
+        }
+    },
+    EditTask: {
+        screen: EditTask,
+        navigationOptions: {
+            title: 'Edit task'
         }
     }
 };

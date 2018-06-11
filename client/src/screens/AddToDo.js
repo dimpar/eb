@@ -1,5 +1,5 @@
-import {StyleSheet, View} from "react-native";
 import React from "react";
+import {StyleSheet, View} from "react-native";
 import Input from "../components/Input";
 import {connect} from "react-redux";
 import Icon from '@expo/vector-icons/Entypo';
@@ -82,7 +82,6 @@ class AddToDo extends React.Component {
                 <Icon name='add-to-list' onPress={() => this.saveTask()}/>
             </View>
         )
-
     }
 }
 

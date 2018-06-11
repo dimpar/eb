@@ -3,6 +3,7 @@ import {FlatList, StyleSheet} from "react-native";
 import {List, ListItem} from "react-native-elements";
 import Icon from '@expo/vector-icons/MaterialIcons';
 import AddToDo from "./AddToDo";
+import EditTask from "./EditTask";
 import {deleteTask, getTasks, resetDeleteTask} from "../actions/task";
 import {connect} from "react-redux";
 
@@ -89,6 +90,7 @@ class ToDoList extends React.Component {
                             rightIcon={
                                 <Icon name={'delete-forever'} size={20} onPress={() => this.deleteTask(item.createDate)}/>
                             }
+                            onPress={() => this.props.navigation.navigate('EditTask')}
                         />
                     )}
                     keyExtractor={item => item.createDate}
