@@ -4,10 +4,8 @@ import {List, ListItem} from "react-native-elements";
 import Icon from '@expo/vector-icons/MaterialIcons';
 import AddToDo from "./AddToDo";
 import EditTask from "./EditTask";
-import {deleteTask, getTasks, resetDeleteTask} from "../actions/task";
+import {deleteTask, getTasks, resetDeleteTask, resetUpdateTask} from "../actions/task";
 import {connect} from "react-redux";
-
-//TODO: add edit functionality
 
 //TODO: clean up UI
 class ToDoList extends React.Component {
@@ -47,13 +45,21 @@ class ToDoList extends React.Component {
     componentDidUpdate() {
         const { task: {
             confirmDeletedTask,
-            failureDeletingTask
+            failureDeletingTask,
+            confirmUpdatingTask,
+            failureUpdatingTask
         }} = this.props;
 
         if (confirmDeletedTask && !failureDeletingTask) {
             this.state.refresh = false;
             alert("Your task has been deleted!");
             this.props.dispatchResetDeleteTask();
+            this.getTasks();
+        }
+
+        if (confirmUpdatingTask && !failureUpdatingTask) {
+            this.state.refresh = false;
+            alert("Your task has been updated!");
             this.getTasks();
         }
     }
@@ -69,12 +75,15 @@ class ToDoList extends React.Component {
         const { task: {
             confirmCreatedTask,
             failureCreatingTask,
+
         }} = this.props;
 
         if (confirmCreatedTask && !failureCreatingTask) {
             this.state.refresh = false;
             alert("Your task has been added!");
         }
+
+
 
         return (
             <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
@@ -90,7 +99,7 @@ class ToDoList extends React.Component {
                             rightIcon={
                                 <Icon name={'delete-forever'} size={20} onPress={() => this.deleteTask(item.createDate)}/>
                             }
-                            onPress={() => this.props.navigation.navigate('EditTask', {name: item.Name, description: item.Description})}
+                            onPress={() => this.props.navigation.navigate('EditTask', {item: item})}
                         />
                     )}
                     keyExtractor={item => item.createDate}
@@ -117,7 +126,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
     dispatchGetTasks: () => getTasks(),
     dispatchDeleteTask: (createDate) => deleteTask(createDate),
-    dispatchResetDeleteTask: () => resetDeleteTask()
+    dispatchResetDeleteTask: () => resetDeleteTask(),
+    dispatchResetUpdateTask: () => resetUpdateTask(),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ToDoList)

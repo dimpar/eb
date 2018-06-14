@@ -6,6 +6,9 @@ export const RESET_CREATE_NEW_TASK = 'RESET_CREATE_NEW_TASK';
 export const CONFIRM_DELETE_TASK = 'CONFIRM_DELETE_TASK';
 export const FAILURE_DELETE_TASK = 'FAILURE_DELETE_TASK';
 export const RESET_DELETE_TASK = 'RESET_DELETE_TASK';
+export const RESET_UPDATING_TASK = 'RESET_UPDATING_TASK';
+export const FAILURE_UPDATING_TASKS = 'FAILURE_UPDATING_TASKS';
+export const CONFIRM_UPDATING_TASKS = 'CONFIRM_UPDATING_TASKS';
 
 const initialState = {
     confirmCreatedTask: false,
@@ -14,6 +17,8 @@ const initialState = {
     failureGetTasks: false,
     confirmDeletedTask: false,
     failureDeletingTask: false,
+    failureUpdatingTask: false,
+    confirmUpdatingTask: false,
 };
 
 export default (state = initialState, action) => {
@@ -57,6 +62,21 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 confirmDeletedTask: false
+            };
+        case FAILURE_UPDATING_TASKS:
+            return {
+                ...state,
+                failureUpdatingTask: true
+            };
+        case CONFIRM_UPDATING_TASKS:
+            return {
+                ...state,
+                confirmUpdatingTask: true
+            };
+        case RESET_UPDATING_TASK:
+            return {
+                ...state,
+                confirmUpdatingTask: false
             };
         default:
             return state

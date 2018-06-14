@@ -8,7 +8,10 @@ import {
     RESET_CREATE_NEW_TASK,
     CONFIRM_DELETE_TASK,
     FAILURE_DELETE_TASK,
-    RESET_DELETE_TASK
+    RESET_DELETE_TASK,
+    CONFIRM_UPDATING_TASKS,
+    FAILURE_UPDATING_TASKS,
+    RESET_UPDATING_TASK
 } from '../reducers/task'
 
 export function createTask(Description, Name, createDate) {
@@ -39,6 +42,32 @@ export function createTask(Description, Name, createDate) {
     }
 }
 
+export function updateTask(Description, Name, createDate) {
+    return async (dispatch) => {
+        let newTask = {
+            body: {
+                "Description": Description,
+                "Name": Name,
+                "createDate": createDate
+            }
+        };
+
+        const path = "/Tasks";
+
+        try {
+            const apiResponse = await API.put("TasksCRUD", path, newTask);
+            if (apiResponse.error) {
+                dispatch(failureUpdatingTask());
+            } else {
+                dispatch(confirmUpdatingTask());
+            }
+        } catch (e) {
+            dispatch(failureUpdatingTask());
+            console.log(e);
+        }
+    }
+}
+
 export function resetCreateTask() {
     return (dispatch) => {
         dispatch(resetCreateNewTask());
@@ -56,8 +85,7 @@ export function getTasks() {
             } else {
                 dispatch(confirmGetTasks())
             }
-            console.log("response from getting tasks: ");
-            console.log(apiResponse);
+
             return apiResponse;
         } catch (e) {
             dispatch(failureGetTasks());
@@ -68,7 +96,7 @@ export function getTasks() {
 
 export function deleteTask(createDate) {
     return async (dispatch) => {
-        console.log("createDate", createDate);
+
         const path = "/Tasks/object/" + createDate;
         try {
             const apiResponse = await API.del("TasksCRUD", path);
@@ -79,14 +107,32 @@ export function deleteTask(createDate) {
             }
         } catch (e) {
             dispatch(failureDeleteTask());
-            console.log(e);
         }
     }
 }
 
 export function resetDeleteTask() {
+    //TODO: do you need dispatch and async here?
     return async (dispatch) => {
         dispatch(resetDeleteTask());
+    }
+}
+
+export function resetUpdateTask() {
+    return {
+        type: RESET_UPDATING_TASK
+    }
+}
+
+function confirmUpdatingTask() {
+    return {
+        type: CONFIRM_UPDATING_TASKS
+    }
+}
+
+function failureUpdatingTask() {
+    return {
+        type: FAILURE_UPDATING_TASKS
     }
 }
 
