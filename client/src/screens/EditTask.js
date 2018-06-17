@@ -1,9 +1,9 @@
 import React from "react";
-import {StyleSheet, Text, View} from "react-native";
+import {StyleSheet, View} from "react-native";
 import Input from "../components/Input";
 import {connect} from "react-redux";
-import Icon from '@expo/vector-icons/Entypo';
 import {resetUpdateTask, updateTask} from "../actions/task";
+import Button from "../components/Button";
 
 class EditTask extends React.Component {
     constructor(props) {
@@ -63,9 +63,8 @@ class EditTask extends React.Component {
     render() {
 
         return (
-            <View>
+            <View style={styles.container}>
                 <View style={styles.inputContainer}>
-                    <Text>Edit your task</Text>
                     <Input
                         value={this.state.Name}
                         placeholder="Name"
@@ -80,8 +79,7 @@ class EditTask extends React.Component {
                     />
                 </View>
 
-                //TODO: change icon or just write 'Update' instead.
-                <Icon name="edit" size={20} style={styles.add} onPress={() => this.updateTask(this.state.createDate)}/>
+                <Button title="Update" onPress={() => this.updateTask(this.state.createDate)}/>
 
             </View>
         )
@@ -105,7 +103,6 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        justifyContent: 'center',
         paddingHorizontal: 40
     }
 });

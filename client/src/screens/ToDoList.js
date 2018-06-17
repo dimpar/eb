@@ -6,18 +6,14 @@ import AddToDo from "./AddToDo";
 import EditTask from "./EditTask";
 import {deleteTask, getTasks, resetDeleteTask, resetUpdateTask} from "../actions/task";
 import {connect} from "react-redux";
+import {colors} from "../theme";
 
-//TODO: clean up UI
 class ToDoList extends React.Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
-            loading: false,
-            page: 1,
-            seed: 1,
-            error: null,
             refresh: false,
         };
 
@@ -64,14 +60,20 @@ class ToDoList extends React.Component {
         }
     }
 
-    render() {
-        const styles = StyleSheet.create({
-            add: {
-                marginTop: 20,
-                marginLeft: 15,
-            },
-        });
+    renderItem = ({ item }) => (
+        <ListItem
+            roundAvatar
+            title={item.Name}
+            subtitle={item.Description}
+            containerStyle={{ borderBottomWidth: 0 }}
+            rightIcon={
+                <Icon name={'delete-forever'} size={22} style={styles.iconColor} onPress={() => this.deleteTask(item.createDate)}/>
+            }
+            onPress={() => this.props.navigation.navigate('EditTask', {item: item})}
+        />
+    );
 
+    render() {
         const { task: {
             confirmCreatedTask,
             failureCreatingTask,
@@ -83,25 +85,12 @@ class ToDoList extends React.Component {
             alert("Your task has been added!");
         }
 
-
-
         return (
-            <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
+            <List containerStyle={styles.container}>
                 <FlatList
                     data={this.state.data}
                     extraData={this.state.refresh}
-                    renderItem={({ item }) => (
-                        <ListItem
-                            roundAvatar
-                            title={item.Name}
-                            subtitle={item.Description}
-                            containerStyle={{ borderBottomWidth: 0 }}
-                            rightIcon={
-                                <Icon name={'delete-forever'} size={20} onPress={() => this.deleteTask(item.createDate)}/>
-                            }
-                            onPress={() => this.props.navigation.navigate('EditTask', {item: item})}
-                        />
-                    )}
+                    renderItem={this.renderItem}
                     keyExtractor={item => item.createDate}
                     // ItemSeparatorComponent={this.renderSeparator}
                     // ListHeaderComponent={this.renderHeader}
@@ -112,8 +101,7 @@ class ToDoList extends React.Component {
                     // onEndReachedThreshold={50}
                 />
 
-                <Icon name="add" size={20} style={styles.add} onPress={() => this.props.navigation.navigate('AddToDo', { onTaskAdd: this.onTaskAdd })}/>
-
+                <Icon name="add" size={22} style={[styles.add, styles.iconColor]} onPress={() => this.props.navigation.navigate('AddToDo', { onTaskAdd: this.onTaskAdd })}/>
             </List>
         )
     }
@@ -131,3 +119,17 @@ const mapDispatchToProps = {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ToDoList)
+
+const styles = StyleSheet.create({
+    container: {
+        paddingHorizontal: 30,
+        backgroundColor: '#E9E9EF'
+    },
+    add: {
+        marginTop: 20,
+        marginLeft: 15,
+    },
+    iconColor: {
+        color: colors.fourth,
+    }
+});

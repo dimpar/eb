@@ -9,13 +9,13 @@ const routes = {
     ToDoList: {
         screen: ToDoList,
         navigationOptions: {
-            title: 'Tasks list'
+            title: 'My tasks'
         }
     },
     AddToDo: {
         screen: AddToDo,
         navigationOptions: {
-            title: 'Add to my list'
+            title: 'Add a new task'
         }
     },
     EditTask: {
@@ -32,7 +32,6 @@ const routeConfig = {
             backgroundColor: colors.fourth,
         },
         headerTintColor: '#fff',
-        height: 10,
         headerTitleStyle: {
             fontWeight: 'bold',
         },

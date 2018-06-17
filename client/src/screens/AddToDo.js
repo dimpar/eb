@@ -4,6 +4,7 @@ import Input from "../components/Input";
 import {connect} from "react-redux";
 import Icon from '@expo/vector-icons/Entypo';
 import {createTask, resetCreateTask} from "../actions/task";
+import {colors} from '../theme'
 
 const initialState = {
     Name: '',
@@ -63,7 +64,7 @@ class AddToDo extends React.Component {
 
     render() {
         return (
-            <View>
+            <View style={styles.container}>
                 <View style={styles.inputContainer}>
                     <Input
                         value={this.state.Name}
@@ -79,7 +80,7 @@ class AddToDo extends React.Component {
                     />
                 </View>
 
-                <Icon name='add-to-list' onPress={() => this.saveTask()}/>
+                <Icon name='add-to-list' size={22} color={colors.fourth} onPress={() => this.saveTask()}/>
             </View>
         )
     }
@@ -102,8 +103,7 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        justifyContent: 'center',
-        paddingHorizontal: 40
+        paddingHorizontal: 30
     }
 });
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import {
     StyleSheet,
-    TextInput
+    TextInput, View
 } from 'react-native'
 
 import { colors } from '../theme'
@@ -14,6 +14,7 @@ export default ({ placeholder, onChangeText, type, ...props }) => (
         placeholder={placeholder}
         placeholderTextColor="#a0a0a0"
         onChangeText={value => onChangeText(type, value)}
+        multiline = {true}
         underlineColorAndroid='transparent'
         {...props}
     />
