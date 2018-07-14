@@ -177,3 +177,9 @@ package-lock.json
 ~awsmobilejs-2018-05-12-13-31-15/backend/cloud-api/sampleLambda/package-lock.json
 ~awsmobilejs-2018-05-12-13-31-15/backend/cloud-api/sampleLambda/package.json
 ~awsmobilejs-2018-05-12-13-31-15/backend/mobile-hub-project.yml
+awsmobilejs/#current-backend-info/cloud-api/EBTasks/app.js
+awsmobilejs/#current-backend-info/cloud-api/EBTasks/lambda.js
+awsmobilejs/#current-backend-info/cloud-api/EBTasks/package.json
+awsmobilejs/backend/cloud-api/
+/client/src/aws-exports.js
+client/src/assets/laptop.jpg alias
