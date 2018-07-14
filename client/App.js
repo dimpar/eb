@@ -4,7 +4,7 @@ import {StatusBar} from 'react-native';
 import awsmobile from './src/aws-exports';
 import {connect} from 'react-redux'
 import AuthHomeNav from "./src/nav/AuthHomeNav";
-import EbNav from "./src/nav/EbNav";
+import TabNav from "./src/nav/EbTabNav";
 import {AppLoading, Font} from 'expo';
 import {FontAwesome} from '@expo/vector-icons';
 
@@ -36,10 +36,10 @@ class App extends React.Component {
                 const {user: {signInUserSession: {accessToken: {payload: {exp, iat}}}}} = Auth
                 if (iat < exp) loggedIn = true;
             }
-            // loggedIn = true;
+            loggedIn = true;
             if (loggedIn) {
                 return (
-                    <EbNav/>
+                    <TabNav/>
                 )
             }
 

@@ -7,35 +7,35 @@ features:
       TasksCRUD: !com.amazonaws.mobilehub.v0.API 
         attributes:
           name: TasksCRUD
-          requires-signin: true
+          requires-signin: false
           sdk-generation-stage-name: Development
         paths:
           /Tasks: !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/Tasks-20180512150111.zip
+            codeFilename: uploads/Tasks-20180712210536.zip
             description: 'Handler for calls to resource path : /Tasks/{proxy+}'
             enableCORS: true
             environment: {}
             handler: lambda.handler
-            hashcode: jXl+CrVlheqfrcCt7V0MTsCYZYFszxf4TAti/TvXTdU=
+            hashcode: g934S/ZqnBayMDVVCCUQf3tMqFap/3aB04snY5xqVmA=
             memorySize: '128'
-            modified: '2018-05-12T21:02:10.410+0000'
+            modified: '2018-07-13T03:06:19.623+0000'
             name: Tasks
             runtime: nodejs6.10
             timeout: '3'
-            version: dd_JBauS_YKXGDJrc0cuUYPrVK_aBLGA
+            version: LeOFP5sB8yo0JnNeod1nOmopFJKw1Zyf
           '/Tasks/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/Tasks-20180512150111.zip
+            codeFilename: uploads/Tasks-20180712210536.zip
             description: 'Handler for calls to resource path : /Tasks/{proxy+}'
             enableCORS: true
             environment: {}
             handler: lambda.handler
-            hashcode: jXl+CrVlheqfrcCt7V0MTsCYZYFszxf4TAti/TvXTdU=
+            hashcode: g934S/ZqnBayMDVVCCUQf3tMqFap/3aB04snY5xqVmA=
             memorySize: '128'
-            modified: '2018-05-12T21:02:10.410+0000'
+            modified: '2018-07-13T03:06:19.623+0000'
             name: Tasks
             runtime: nodejs6.10
             timeout: '3'
-            version: dotuWs_5Zzs9.0PKEbpG09BkibcXOEdZ
+            version: DC9BQSA1DGaAQGFCTgtdh2dUeureUPVb
   content-delivery: !com.amazonaws.mobilehub.v0.ContentDelivery 
     attributes:
       enabled: true
@@ -48,9 +48,10 @@ features:
         tables:
           - !com.amazonaws.mobilehub.v0.NoSQLTable 
             attributes:
-              Description: S
-              Name: S
               createDate: S
+              notes: L
+              settings: M
+              tasks: L
               userId: S
             hashKeyName: userId
             hashKeyType: S
@@ -64,7 +65,7 @@ features:
   sign-in: !com.amazonaws.mobilehub.v0.SignIn 
     attributes:
       enabled: true
-      optional-sign-in: false
+      optional-sign-in: true
     components:
       sign-in-user-pools: !com.amazonaws.mobilehub.v0.UserPoolsIdentityProvider 
         attributes:
