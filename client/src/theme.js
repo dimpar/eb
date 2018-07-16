@@ -4,7 +4,8 @@ const colors = {
     third: '#F3440F', // red-ish
     fourth: '#E0850A', // orange
     fifth: '#BABABA', // gray
-    white: '#fff' // white
+    white: '#fff', // white
+    lightGray: '#a0a0a0' // light gray
 };
 
 const iconSize = {

@@ -12,7 +12,7 @@ export default ({ placeholder, onChangeText, type, ...props }) => (
         autoCorrect={false}
         style={[styles.input]}
         placeholder={placeholder}
-        placeholderTextColor="#a0a0a0"
+        placeholderTextColor={colors.lightGray}
         onChangeText={value => onChangeText(type, value)}
         multiline = {true}
         underlineColorAndroid='transparent'

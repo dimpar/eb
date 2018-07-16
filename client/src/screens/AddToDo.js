@@ -11,7 +11,9 @@ import DatePicker from "../components/DatePicker";
 const initialState = {
     Name: '',
     Description: '',
-    createDate: ''
+    createDate: '',
+    due: '',
+    reminder: ''
 };
 
 
@@ -35,7 +37,8 @@ class AddToDo extends React.Component {
         ...initialState,
         apiResponse: null,
         newTask: '',
-        isDateTimePickerVisible: false,
+        isDueDateTimePickerVisible: false,
+        isReminderDateTimePickerVisible: false,
     };
 
     onChangeText = (key, value) => {
@@ -44,14 +47,24 @@ class AddToDo extends React.Component {
         })
     };
 
-    showDateTimePicker = () => this.setState({ isDateTimePickerVisible: true });
+    showDueDateTimePicker = () => this.setState({ isDueDateTimePickerVisible: true });
 
-    hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
+    hideDueDateTimePicker = () => this.setState({ isDueDateTimePickerVisible: false });
 
-    handleDatePicked = (date) => {
-        console.log('A date has been picked: ', date);
-        this.hideDateTimePicker();
+    showReminderDateTimePicker = () => this.setState({ isReminderDateTimePickerVisible: true });
+
+    hideReminderDateTimePicker = () => this.setState({ isReminderDateTimePickerVisible: false });
+
+    handleReminderDate = (date) => {
+        console.log('A reminder date has been picked: ', date);
+        this.hideReminderDateTimePicker();
     };
+
+    handleDueDate = (date) => {
+        console.log('A due date has been picked: ', date);
+        this.hideDueDateTimePicker();
+    };
+
 
     handlePriority = () => {
 
@@ -61,6 +74,7 @@ class AddToDo extends React.Component {
         var rightNow = new Date();
         var now = rightNow.toISOString().replace(/:/g, '-');
         const { Description, Name} = this.state;
+        //TODO: create an object for task
         this.state.newTask = {
             createDate: now,
             Description: Description,
@@ -99,42 +113,43 @@ class AddToDo extends React.Component {
                 <View style={{flexDirection: 'row'}}>
                     <View style={styles.icons}>
                         <DatePicker
-                            showDateTimePicker = {this.showDateTimePicker}
-                            isDateTimePickerVisible = {this.state.isDateTimePickerVisible}
-                            handleDatePicked = {this.handleDatePicked}
-                            hideDateTimePicker = {this.hideDateTimePicker}
+                            showDateTimePicker = {this.showDueDateTimePicker}
+                            isDateTimePickerVisible = {this.state.isDueDateTimePickerVisible}
+                            handleDatePicked = {this.handleDueDate}
+                            hideDateTimePicker = {this.hideDueDateTimePicker}
                             iconName = 'calendar'
                         />
                     </View>
                     <View style={styles.iconTitles}>
                         <Text>Due</Text>
-                        <Text>Set a due date and time</Text>
+                        <Text style={styles.iconDescription}>Set a due date and time</Text>
                     </View>
                 </View>
 
                 <View style={{flexDirection: 'row'}}>
                     <View style={styles.icons}>
                         <DatePicker
-                            showDateTimePicker = {this.showDateTimePicker}
-                            isDateTimePickerVisible = {this.state.isDateTimePickerVisible}
-                            handleDatePicked = {this.handleDatePicked}
-                            hideDateTimePicker = {this.hideDateTimePicker}
+                            showDateTimePicker = {this.showReminderDateTimePicker}
+                            isDateTimePickerVisible = {this.state.isReminderDateTimePickerVisible}
+                            handleDatePicked = {this.handleReminderDate}
+                            hideDateTimePicker = {this.hideReminderDateTimePicker}
                             iconName = 'bell'
                         />
                     </View>
                     <View style={styles.iconTitles}>
                         <Text>Reminder</Text>
-                        <Text>Add time or location reminder</Text>
+                        <Text style={styles.iconDescription}>Add time or location reminder</Text>
                     </View>
                 </View>
 
+                {/*TODO: add priority selection here*/}
                 <View style={{flexDirection: 'row'}}>
                     <View style={styles.icons}>
                         <Entypo name='flag' size={iconSize.primary} color={colors.fourth} onPress={() => this.handlePriority()}/>
                     </View>
                     <View style={styles.iconTitles}>
                         <Text>Priority</Text>
-                        <Text>Add priority to your task.</Text>
+                        <Text style={styles.iconDescription}>Add priority to your task.</Text>
                     </View>
                 </View>
 
@@ -171,6 +186,9 @@ const styles = StyleSheet.create({
     },
     iconTitles: {
         padding: 20
+    },
+    iconDescription: {
+        color: colors.lightGray
     }
 });
 
