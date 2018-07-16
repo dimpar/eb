@@ -1,10 +1,12 @@
 import React from "react";
-import {StyleSheet, View} from "react-native";
+import {StyleSheet, Text, View} from "react-native";
 import Input from "../components/Input";
 import {connect} from "react-redux";
-import Icon from '@expo/vector-icons/Entypo';
+import Icon from '@expo/vector-icons/Ionicons';
+import Entypo from '@expo/vector-icons/Entypo';
 import {createTask, resetCreateTask} from "../actions/task";
-import {colors} from '../theme'
+import {colors, iconSize} from '../theme'
+import DatePicker from "../components/DatePicker";
 
 const initialState = {
     Name: '',
@@ -32,13 +34,27 @@ class AddToDo extends React.Component {
     state = {
         ...initialState,
         apiResponse: null,
-        newTask: ''
+        newTask: '',
+        isDateTimePickerVisible: false,
     };
 
     onChangeText = (key, value) => {
         this.setState({
             [key]: value
         })
+    };
+
+    showDateTimePicker = () => this.setState({ isDateTimePickerVisible: true });
+
+    hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
+
+    handleDatePicked = (date) => {
+        console.log('A date has been picked: ', date);
+        this.hideDateTimePicker();
+    };
+
+    handlePriority = () => {
+
     };
 
     async saveTask() {
@@ -68,19 +84,61 @@ class AddToDo extends React.Component {
                 <View style={styles.inputContainer}>
                     <Input
                         value={this.state.Name}
-                        placeholder="Name"
+                        placeholder="Name of this task"
                         type='Name'
                         onChangeText={this.onChangeText}
                     />
                     <Input
                         value={this.state.Description}
-                        placeholder="Description"
+                        placeholder="Description (optional)"
                         type='Description'
                         onChangeText={this.onChangeText}
                     />
                 </View>
 
-                <Icon name='add-to-list' size={22} color={colors.fourth} onPress={() => this.saveTask()}/>
+                <View style={{flexDirection: 'row'}}>
+                    <View style={styles.icons}>
+                        <DatePicker
+                            showDateTimePicker = {this.showDateTimePicker}
+                            isDateTimePickerVisible = {this.state.isDateTimePickerVisible}
+                            handleDatePicked = {this.handleDatePicked}
+                            hideDateTimePicker = {this.hideDateTimePicker}
+                            iconName = 'calendar'
+                        />
+                    </View>
+                    <View style={styles.iconTitles}>
+                        <Text>Due</Text>
+                        <Text>Set a due date and time</Text>
+                    </View>
+                </View>
+
+                <View style={{flexDirection: 'row'}}>
+                    <View style={styles.icons}>
+                        <DatePicker
+                            showDateTimePicker = {this.showDateTimePicker}
+                            isDateTimePickerVisible = {this.state.isDateTimePickerVisible}
+                            handleDatePicked = {this.handleDatePicked}
+                            hideDateTimePicker = {this.hideDateTimePicker}
+                            iconName = 'bell'
+                        />
+                    </View>
+                    <View style={styles.iconTitles}>
+                        <Text>Reminder</Text>
+                        <Text>Add time or location reminder</Text>
+                    </View>
+                </View>
+
+                <View style={{flexDirection: 'row'}}>
+                    <View style={styles.icons}>
+                        <Entypo name='flag' size={iconSize.primary} color={colors.fourth} onPress={() => this.handlePriority()}/>
+                    </View>
+                    <View style={styles.iconTitles}>
+                        <Text>Priority</Text>
+                        <Text>Add priority to your task.</Text>
+                    </View>
+                </View>
+
+                <Icon name='md-checkmark' style={styles.iconSend} size={iconSize.primary} color={colors.fourth} onPress={() => this.saveTask()}/>
             </View>
         )
     }
@@ -104,6 +162,15 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingHorizontal: 30
+    },
+    iconSend: {
+        textAlign: 'right'
+    },
+    icons: {
+        padding: 15
+    },
+    iconTitles: {
+        padding: 20
     }
 });
 

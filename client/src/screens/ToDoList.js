@@ -67,7 +67,7 @@ class ToDoList extends React.Component {
             subtitle={item.Description}
             containerStyle={{ borderBottomWidth: 0 }}
             rightIcon={
-                <Icon name={'delete-forever'} size={22} style={styles.iconColor} onPress={() => this.deleteTask(item.createDate)}/>
+                <Icon name={'delete-forever'} size={22} style={styles.iconDelete} onPress={() => this.deleteTask(item.createDate)}/>
             }
             onPress={() => this.props.navigation.navigate('EditTask', {item: item})}
         />
@@ -101,7 +101,7 @@ class ToDoList extends React.Component {
                     // onEndReachedThreshold={50}
                 />
 
-                <Icon name="add" size={22} style={[styles.add, styles.iconColor]} onPress={() => this.props.navigation.navigate('AddToDo', { onTaskAdd: this.onTaskAdd })}/>
+                <Icon name="add-circle" size={40} style={[styles.add, styles.iconAdd]} onPress={() => this.props.navigation.navigate('AddToDo', { onTaskAdd: this.onTaskAdd })}/>
             </List>
         )
     }
@@ -129,7 +129,11 @@ const styles = StyleSheet.create({
         marginTop: 20,
         marginLeft: 15,
     },
-    iconColor: {
+    iconDelete: {
         color: colors.fourth,
+    },
+    iconAdd: {
+        color: colors.fourth,
+        textAlign: 'right'
     }
 });

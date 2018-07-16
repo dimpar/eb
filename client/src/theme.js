@@ -7,6 +7,13 @@ const colors = {
     white: '#fff' // white
 };
 
+const iconSize = {
+    primary: 35,
+    secondary: 30,
+    third: 25
+};
+
 export {
     colors,
+    iconSize
 }
