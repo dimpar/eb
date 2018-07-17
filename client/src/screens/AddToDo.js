@@ -9,8 +9,8 @@ import {colors, iconSize} from '../theme'
 import DatePicker from "../components/DatePicker";
 
 const initialState = {
-    Name: '',
-    Description: '',
+    name: '',
+    description: '',
     createDate: '',
     due: '',
     reminder: ''
@@ -57,11 +57,13 @@ class AddToDo extends React.Component {
 
     handleReminderDate = (date) => {
         console.log('A reminder date has been picked: ', date);
+        this.state.due = date;
         this.hideReminderDateTimePicker();
     };
 
     handleDueDate = (date) => {
         console.log('A due date has been picked: ', date);
+        this.state.reminder = date;
         this.hideDueDateTimePicker();
     };
 
@@ -73,14 +75,23 @@ class AddToDo extends React.Component {
     async saveTask() {
         var rightNow = new Date();
         var now = rightNow.toISOString().replace(/:/g, '-');
-        const { Description, Name} = this.state;
+        const { description, name, due, reminder} = this.state;
         //TODO: create an object for task
-        this.state.newTask = {
+        console.log("due save:", due);
+        console.log("reminder save:", reminder);
+        console.log("description save:", description);
+        console.log("name save:", name);
+
+        var newTask = {
             createDate: now,
-            Description: Description,
-            Name: Name
+            description: description,
+            name: name,
+            due: due,
+            reminder: reminder,
+            labels: ['test1', 'test2'],
+            priority: 'low'
         };
-        this.props.dispatchCreateTask(Description, Name, now)
+        this.props.dispatchCreateTask(newTask)
     }
 
     goBack() {
@@ -92,20 +103,21 @@ class AddToDo extends React.Component {
         navigation.goBack();
     }
 
+    //TODO: add priority and labels
     render() {
         return (
             <View style={styles.container}>
                 <View style={styles.inputContainer}>
                     <Input
-                        value={this.state.Name}
+                        value={this.state.name}
                         placeholder="Name of this task"
-                        type='Name'
+                        type='name'
                         onChangeText={this.onChangeText}
                     />
                     <Input
-                        value={this.state.Description}
+                        value={this.state.description}
                         placeholder="Description (optional)"
-                        type='Description'
+                        type='description'
                         onChangeText={this.onChangeText}
                     />
                 </View>
@@ -164,7 +176,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-    dispatchCreateTask: (Description, Name, createDate) => createTask(Description, Name, createDate),
+    dispatchCreateTask: (newTask) => createTask(newTask),
     dispatchResetCreateTask: () => resetCreateTask()
 };
 

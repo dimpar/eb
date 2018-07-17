@@ -14,20 +14,20 @@ import {
     RESET_UPDATING_TASK
 } from '../reducers/task'
 
-export function createTask(Description, Name, createDate) {
+export function createTask(newTask) {
     return async (dispatch) => {
-        let newTask = {
+        //TODO: create a task when creating a user. Every new task would be an update of a row
+        let taskToSave = {
             body: {
-                "Description": Description,
-                "Name": Name,
-                "createDate": createDate
+                "tasks": newTask,
+                "createDate": '2018-06-14T06-38-39.742Z'
             }
         };
 
         const path = "/Tasks";
 
         try {
-            const apiResponse = await API.post("TasksCRUD", path, newTask);
+            const apiResponse = await API.post("TasksCRUD", path, taskToSave);
             if (apiResponse.error) {
                 dispatch(failureCreatingNewTask());
             } else {
