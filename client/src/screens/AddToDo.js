@@ -1,5 +1,5 @@
 import React from "react";
-import {StyleSheet, Text, View} from "react-native";
+import {Picker, StyleSheet, Text, View} from "react-native";
 import Input from "../components/Input";
 import {connect} from "react-redux";
 import Icon from '@expo/vector-icons/Ionicons';
@@ -7,13 +7,15 @@ import Entypo from '@expo/vector-icons/Entypo';
 import {createTask, resetCreateTask} from "../actions/task";
 import {colors, iconSize} from '../theme'
 import DatePicker from "../components/DatePicker";
+import Moment from "react-moment";
 
 const initialState = {
     name: '',
     description: '',
     createDate: '',
     due: '',
-    reminder: ''
+    reminder: '',
+    priority: ''
 };
 
 
@@ -56,14 +58,12 @@ class AddToDo extends React.Component {
     hideReminderDateTimePicker = () => this.setState({ isReminderDateTimePickerVisible: false });
 
     handleReminderDate = (date) => {
-        console.log('A reminder date has been picked: ', date);
-        this.state.due = date;
+        this.setState({reminder: date});
         this.hideReminderDateTimePicker();
     };
 
     handleDueDate = (date) => {
-        console.log('A due date has been picked: ', date);
-        this.state.reminder = date;
+        this.setState({due: date});
         this.hideDueDateTimePicker();
     };
 
@@ -75,12 +75,13 @@ class AddToDo extends React.Component {
     async saveTask() {
         var rightNow = new Date();
         var now = rightNow.toISOString().replace(/:/g, '-');
-        const { description, name, due, reminder} = this.state;
+        const { description, name, due, reminder, priority} = this.state;
         //TODO: create an object for task
         console.log("due save:", due);
         console.log("reminder save:", reminder);
         console.log("description save:", description);
         console.log("name save:", name);
+        console.log("priority save:", priority);
 
         var newTask = {
             createDate: now,
@@ -89,7 +90,7 @@ class AddToDo extends React.Component {
             due: due,
             reminder: reminder,
             labels: ['test1', 'test2'],
-            priority: 'low'
+            priority: priority
         };
         this.props.dispatchCreateTask(newTask)
     }
@@ -104,8 +105,15 @@ class AddToDo extends React.Component {
     }
 
     //TODO: add priority and labels
+    //TODO: add 'repeat' functionality in due date
+    //TODO: when typing description, make the field expand if it's more than 1 row
     render() {
+
+        // const formattedDate = moment(this.state.due).format("LLL");
+
+        const dateToFormat = '1976-04-19T12:59-0500';
         return (
+
             <View style={styles.container}>
                 <View style={styles.inputContainer}>
                     <Input
@@ -133,7 +141,8 @@ class AddToDo extends React.Component {
                         />
                     </View>
                     <View style={styles.iconTitles}>
-                        <Text>Due</Text>
+                        //TODO: handle 'invalid date' display & deprecation warning
+                        <Text>Due: <Moment element={Text} format="YYYY/MM/DD HH:mm">{this.state.due}</Moment> </Text>
                         <Text style={styles.iconDescription}>Set a due date and time</Text>
                     </View>
                 </View>
@@ -149,7 +158,8 @@ class AddToDo extends React.Component {
                         />
                     </View>
                     <View style={styles.iconTitles}>
-                        <Text>Reminder</Text>
+                        //TODO: handle 'invalid date' display & deprecation warning
+                        <Text>Reminder: <Moment element={Text} format="YYYY/MM/DD HH:mm">{this.state.reminder}</Moment></Text>
                         <Text style={styles.iconDescription}>Add time or location reminder</Text>
                     </View>
                 </View>
@@ -160,8 +170,16 @@ class AddToDo extends React.Component {
                         <Entypo name='flag' size={iconSize.primary} color={colors.fourth} onPress={() => this.handlePriority()}/>
                     </View>
                     <View style={styles.iconTitles}>
-                        <Text>Priority</Text>
-                        <Text style={styles.iconDescription}>Add priority to your task.</Text>
+                        <Text>Add priority to your task:</Text>
+                        <Picker
+                            style={styles.twoPickers} itemStyle={styles.twoPickerItems}
+                            selectedValue={this.state.priority}
+                            onValueChange={(itemValue) => this.setState({priority: itemValue})}>
+                            <Picker.Item color={colors.third} label="High" value="high" />
+                            <Picker.Item color={colors.secondary} label="Mid" value="mid" />
+                            <Picker.Item color={colors.fifth} label="Low" value="low" />
+                        </Picker>
+
                     </View>
                 </View>
 
@@ -201,6 +219,14 @@ const styles = StyleSheet.create({
     },
     iconDescription: {
         color: colors.lightGray
-    }
+    },
+    twoPickers: {
+        width: 100,
+        height: 40,
+    },
+    twoPickerItems: {
+        height: 40,
+        fontSize: 16,
+    },
 });
 
