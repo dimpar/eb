@@ -1,5 +1,5 @@
 import React from "react";
-import {Picker, StyleSheet, Text, View} from "react-native";
+import {Picker, StyleSheet, Text, TextInput, View} from "react-native";
 import Input from "../components/Input";
 import {connect} from "react-redux";
 import Icon from '@expo/vector-icons/Ionicons';
@@ -7,7 +7,7 @@ import Entypo from '@expo/vector-icons/Entypo';
 import {createTask, resetCreateTask} from "../actions/task";
 import {colors, iconSize} from '../theme'
 import DatePicker from "../components/DatePicker";
-import Moment from "react-moment";
+import moment from "moment";
 
 const initialState = {
     name: '',
@@ -63,13 +63,12 @@ class AddToDo extends React.Component {
     };
 
     handleDueDate = (date) => {
-        this.setState({due: date});
+        this.setState({due: date.toISOString()});
         this.hideDueDateTimePicker();
     };
 
-
-    handlePriority = () => {
-
+    getDate = (date) => {
+        return date != '' ? moment(date).format("LLL") : 'select';
     };
 
     async saveTask() {
@@ -106,12 +105,7 @@ class AddToDo extends React.Component {
 
     //TODO: add priority and labels
     //TODO: add 'repeat' functionality in due date
-    //TODO: when typing description, make the field expand if it's more than 1 row
     render() {
-
-        // const formattedDate = moment(this.state.due).format("LLL");
-
-        const dateToFormat = '1976-04-19T12:59-0500';
         return (
 
             <View style={styles.container}>
@@ -122,10 +116,11 @@ class AddToDo extends React.Component {
                         type='name'
                         onChangeText={this.onChangeText}
                     />
-                    <Input
+                    <TextInput
                         value={this.state.description}
                         placeholder="Description (optional)"
                         type='description'
+                        multiline={true}
                         onChangeText={this.onChangeText}
                     />
                 </View>
@@ -141,8 +136,7 @@ class AddToDo extends React.Component {
                         />
                     </View>
                     <View style={styles.iconTitles}>
-                        //TODO: handle 'invalid date' display & deprecation warning
-                        <Text>Due: <Moment element={Text} format="YYYY/MM/DD HH:mm">{this.state.due}</Moment> </Text>
+                        <Text>Due: {this.getDate(this.state.due)} </Text>
                         <Text style={styles.iconDescription}>Set a due date and time</Text>
                     </View>
                 </View>
@@ -158,13 +152,11 @@ class AddToDo extends React.Component {
                         />
                     </View>
                     <View style={styles.iconTitles}>
-                        //TODO: handle 'invalid date' display & deprecation warning
-                        <Text>Reminder: <Moment element={Text} format="YYYY/MM/DD HH:mm">{this.state.reminder}</Moment></Text>
+                        <Text>Reminder: {this.getDate(this.state.reminder)} </Text>
                         <Text style={styles.iconDescription}>Add time or location reminder</Text>
                     </View>
                 </View>
 
-                {/*TODO: add priority selection here*/}
                 <View style={{flexDirection: 'row'}}>
                     <View style={styles.icons}>
                         <Entypo name='flag' size={iconSize.primary} color={colors.fourth} onPress={() => this.handlePriority()}/>
@@ -175,15 +167,16 @@ class AddToDo extends React.Component {
                             style={styles.twoPickers} itemStyle={styles.twoPickerItems}
                             selectedValue={this.state.priority}
                             onValueChange={(itemValue) => this.setState({priority: itemValue})}>
-                            <Picker.Item color={colors.third} label="High" value="high" />
-                            <Picker.Item color={colors.secondary} label="Mid" value="mid" />
-                            <Picker.Item color={colors.fifth} label="Low" value="low" />
+                            <Picker.Item color={colors.fourth} label="Do, important but not urgent" value="1" />
+                            <Picker.Item color={colors.third} label="Do now, urgent and important" value="2" />
+                            <Picker.Item color={colors.primary} label="Do later, not important or urgent" value="3" />
+                            <Picker.Item color={colors.greenish} label="Delegate, urgent but not important" value="4" />
                         </Picker>
 
                     </View>
                 </View>
 
-                <Icon name='md-checkmark' style={styles.iconSend} size={iconSize.primary} color={colors.fourth} onPress={() => this.saveTask()}/>
+                <Icon name='md-checkmark-circle' style={styles.iconSend} size={iconSize.primary} color={colors.fourth} onPress={() => this.saveTask()}/>
             </View>
         )
     }
@@ -202,7 +195,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(AddToDo)
 
 const styles = StyleSheet.create({
     inputContainer: {
-        marginTop: 20
+        marginTop: 20,
+        borderBottomColor: colors.fourth,
+        borderBottomWidth: 2,
+        paddingBottom: 20
     },
     container: {
         flex: 1,
@@ -221,12 +217,13 @@ const styles = StyleSheet.create({
         color: colors.lightGray
     },
     twoPickers: {
-        width: 100,
+        width: 240,
         height: 40,
     },
     twoPickerItems: {
         height: 40,
         fontSize: 16,
+        textAlign: 'left'
     },
 });
 
