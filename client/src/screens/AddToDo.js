@@ -4,10 +4,11 @@ import Input from "../components/Input";
 import {connect} from "react-redux";
 import Icon from '@expo/vector-icons/Ionicons';
 import Entypo from '@expo/vector-icons/Entypo';
-import {createTask, resetCreateTask} from "../actions/task";
+import {addTask, resetCreateTask} from "../actions/task";
 import {colors, iconSize} from '../theme'
 import DatePicker from "../components/DatePicker";
 import moment from "moment";
+
 
 const initialState = {
     name: '',
@@ -15,10 +16,12 @@ const initialState = {
     createDate: '',
     due: '',
     reminder: '',
-    priority: ''
+    priority: '1'
 };
 
+//TODO: allow description to be OPTIONAL
 
+//TODO: error handling. Add required fields
 class AddToDo extends React.Component {
 
     //is there a better way to go back to ToDoList?
@@ -71,27 +74,22 @@ class AddToDo extends React.Component {
         return date != '' ? moment(date).format("LLL") : 'select';
     };
 
-    async saveTask() {
-        var rightNow = new Date();
-        var now = rightNow.toISOString().replace(/:/g, '-');
+    //TODO: change lambda to handle creation of a tasks array. Now it will fail if the array is empty
+    addTask() {
+        let rightNow = new Date();
+        let now = rightNow.toISOString().replace(/:/g, '-');
         const { description, name, due, reminder, priority} = this.state;
-        //TODO: create an object for task
-        console.log("due save:", due);
-        console.log("reminder save:", reminder);
-        console.log("description save:", description);
-        console.log("name save:", name);
-        console.log("priority save:", priority);
 
-        var newTask = {
+        let newTask = {
             createDate: now,
             description: description,
-            name: name,
             due: due,
-            reminder: reminder,
-            labels: ['test1', 'test2'],
-            priority: priority
+            name: name,
+            priority: priority,
+            reminder: reminder
         };
-        this.props.dispatchCreateTask(newTask)
+
+        this.props.dispatchAddTask(newTask)
     }
 
     goBack() {
@@ -103,8 +101,9 @@ class AddToDo extends React.Component {
         navigation.goBack();
     }
 
-    //TODO: add priority and labels
-    //TODO: add 'repeat' functionality in due date
+    // TODO: add priority and labels
+    // TODO: add 'repeat' functionality in due date
+    // TODO: add 'time needed' field.
     render() {
         return (
 
@@ -119,9 +118,11 @@ class AddToDo extends React.Component {
                     <TextInput
                         value={this.state.description}
                         placeholder="Description (optional)"
-                        type='description'
-                        multiline={true}
-                        onChangeText={this.onChangeText}
+                        style={styles.inputContainerTextInput}
+                        placeholderTextColor={colors.lightGray}
+                        onChangeText={value => this.onChangeText('description', value)}
+                        multiline = {true}
+                        underlineColorAndroid='transparent'
                     />
                 </View>
 
@@ -163,6 +164,7 @@ class AddToDo extends React.Component {
                     </View>
                     <View style={styles.iconTitles}>
                         <Text>Add priority to your task:</Text>
+                        {/*//TODO: extract const values for priority 1,2,3,4*/}
                         <Picker
                             style={styles.twoPickers} itemStyle={styles.twoPickerItems}
                             selectedValue={this.state.priority}
@@ -176,7 +178,7 @@ class AddToDo extends React.Component {
                     </View>
                 </View>
 
-                <Icon name='md-checkmark-circle' style={styles.iconSend} size={iconSize.primary} color={colors.fourth} onPress={() => this.saveTask()}/>
+                <Icon name='md-checkmark-circle' style={styles.iconSend} size={iconSize.primary} color={colors.fourth} onPress={() => this.addTask()}/>
             </View>
         )
     }
@@ -187,7 +189,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-    dispatchCreateTask: (newTask) => createTask(newTask),
+    dispatchAddTask: (newTask) => addTask(newTask),
     dispatchResetCreateTask: () => resetCreateTask()
 };
 
@@ -198,7 +200,11 @@ const styles = StyleSheet.create({
         marginTop: 20,
         borderBottomColor: colors.fourth,
         borderBottomWidth: 2,
-        paddingBottom: 20
+        paddingBottom: 20,
+    },
+    inputContainerTextInput: {
+        fontFamily: 'light',
+        fontSize: 16
     },
     container: {
         flex: 1,

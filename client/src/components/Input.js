@@ -1,10 +1,7 @@
 import React from 'react'
-import {
-    StyleSheet,
-    TextInput, View
-} from 'react-native'
+import {StyleSheet, TextInput} from 'react-native'
 
-import { colors } from '../theme'
+import {colors} from '../theme'
 
 export default ({ placeholder, onChangeText, type, ...props }) => (
     <TextInput
