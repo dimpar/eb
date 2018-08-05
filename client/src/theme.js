@@ -6,7 +6,12 @@ const colors = {
     fifth: '#BABABA', // gray
     white: '#fff', // white
     lightGray: '#a0a0a0', // light gray
-    greenish: '#237f3f'
+    greenish: '#237f3f',
+    background: '#E9E9EF',
+    priorityIcon1: '#707070',
+    priorityIcon2: '#828282',
+    priorityIcon3: '#a0a0a0',
+    priorityIcon4: '#bcbcbc',
 };
 
 const iconSize = {

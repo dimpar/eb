@@ -1,12 +1,15 @@
 import React from "react";
-import {FlatList, StyleSheet} from "react-native";
-import {List, ListItem} from "react-native-elements";
-import Icon from '@expo/vector-icons/MaterialIcons';
+import {FlatList, StyleSheet, View} from "react-native";
+import {List, ListItem, SearchBar} from "react-native-elements";
+import FontAwesomeIcon from '@expo/vector-icons/FontAwesome';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import AddToDo from "./AddToDo";
 import EditTask from "./EditTask";
 import {deleteTask, getTasks, resetDeleteTask, resetUpdateTask} from "../actions/task";
 import {connect} from "react-redux";
 import {colors} from "../theme";
+import Constants from "../util/constants";
 
 class ToDoList extends React.Component {
 
@@ -28,8 +31,8 @@ class ToDoList extends React.Component {
     };
 
     getTasks = () => {
-        this.props.dispatchGetTasks().then(tasks => {
-            this.setState({data: tasks});
+        this.props.dispatchGetTasks().then(response => {
+            this.setState({data: response.tasks});
         });
     };
 
@@ -60,18 +63,58 @@ class ToDoList extends React.Component {
         }
     }
 
+    getPriorityIcon = (item) => {
+        if (item.priority == Constants.PRIORITY.URGENT_IMPORTANT) {
+            return <FontAwesomeIcon name={'exclamation-circle'} size={Constants.PRIORITY.ICON_SIZE} style={[{color: colors.priorityIcon1}, styles.iconsPriority]} />
+        }
+
+        if (item.priority == Constants.PRIORITY.NOT_URGENT_IMPORTANT) {
+            return <FontAwesomeIcon name={'arrow-right'} size={Constants.PRIORITY.ICON_SIZE} style={[{color: colors.priorityIcon2}, styles.iconsPriority]} />
+        }
+
+        if (item.priority == Constants.PRIORITY.URGENT_NOT_IMPORTANT) {
+            return <FontAwesomeIcon name={'calendar'} size={Constants.PRIORITY.ICON_SIZE} style={[{color: colors.priorityIcon3}, styles.iconsPriority]} />
+        }
+
+        if (item.priority == Constants.PRIORITY.NOT_URGENT_NOT_IMPORTANT) {
+            return <MaterialCommunityIcons name={'tag-remove'} size={Constants.PRIORITY.ICON_SIZE} style={[{color: colors.priorityIcon4}, styles.iconsPriority]} />
+        }
+    };
+
     renderItem = ({ item }) => (
         <ListItem
-            roundAvatar
-            title={item.Name}
-            subtitle={item.Description}
-            containerStyle={{ borderBottomWidth: 0 }}
+            title={item.name}
+            subtitle={item.description}
+            avatarStyle = {{backgroundColor: colors.background}}
+            leftIcon={
+                this.getPriorityIcon(item)
+            }
             rightIcon={
-                <Icon name={'delete-forever'} size={22} style={styles.iconDelete} onPress={() => this.deleteTask(item.createDate)}/>
+                <MaterialIcons name={'delete-forever'} size={22} style={styles.iconDelete} onPress={() => this.deleteTask(item.createDate)}/>
             }
             onPress={() => this.props.navigation.navigate('EditTask', {item: item})}
         />
     );
+
+    renderHeader = () => {
+        return <SearchBar containerStyle={{backgroundColor: colors.background}} placeholder="Type Here..." lightTheme />;
+    };
+
+    renderFooter = () => {
+        if (!this.state.loading) return null;
+
+        return (
+            <View
+                style={{
+                    paddingVertical: 20,
+                    borderTopWidth: 1,
+                    borderColor: "#CED0CE"
+                }}
+            >
+                <ActivityIndicator animating size="large" />
+            </View>
+        );
+    };
 
     render() {
         const { task: {
@@ -86,22 +129,22 @@ class ToDoList extends React.Component {
         }
 
         return (
+
             <List containerStyle={styles.container}>
                 <FlatList
                     data={this.state.data}
                     extraData={this.state.refresh}
                     renderItem={this.renderItem}
                     keyExtractor={item => item.createDate}
-                    // ItemSeparatorComponent={this.renderSeparator}
-                    // ListHeaderComponent={this.renderHeader}
-                    // ListFooterComponent={this.renderFooter}
+                    ListHeaderComponent={this.renderHeader}
+                    ListFooterComponent={this.renderFooter}
                     // onRefresh={this.handleRefresh}
                     // refreshing={this.state.refreshing}
                     // onEndReached={this.handleLoadMore}
                     // onEndReachedThreshold={50}
                 />
 
-                <Icon name="add-circle" size={40} style={[styles.add, styles.iconAdd]} onPress={() => this.props.navigation.navigate('AddToDo', { onTaskAdd: this.onTaskAdd })}/>
+                <MaterialIcons name="add-circle" size={40} style={[styles.add, styles.iconAdd]} onPress={() => this.props.navigation.navigate('AddToDo', { onTaskAdd: this.onTaskAdd })}/>
             </List>
         )
     }
@@ -122,8 +165,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(ToDoList)
 
 const styles = StyleSheet.create({
     container: {
-        paddingHorizontal: 30,
-        backgroundColor: '#E9E9EF'
+        marginTop: 0,
+        paddingTop: 0,
+        paddingHorizontal: 20,
+        backgroundColor: colors.background,
+        borderBottomWidth: 0,
+        borderTopWidth: 0
     },
     add: {
         marginTop: 20,
@@ -135,5 +182,11 @@ const styles = StyleSheet.create({
     iconAdd: {
         color: colors.fourth,
         textAlign: 'right'
+    },
+    iconsPriority: {
+        marginRight: 20,
+        marginLeft: 0,
+        paddingLeft: 0
+
     }
 });

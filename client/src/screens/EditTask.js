@@ -18,15 +18,13 @@ class EditTask extends React.Component {
         }} = this.props;
 
         this.state = {
-            Description: item.Description,
-            Name: item.Name,
+            description: item.description,
+            name: item.name,
             createDate: item.createDate
         };
     }
 
     componentDidUpdate() {
-        console.log("this.props11", this.props)
-
         const { task: {
             failureUpdatingTask,
             confirmUpdatingTask,
@@ -50,6 +48,7 @@ class EditTask extends React.Component {
         })
     };
 
+    //TODO: update client & backend for new features
     async updateTask(createDate) {
         const { Description, Name} = this.state;
         console.log("on update", this.state);
@@ -66,13 +65,13 @@ class EditTask extends React.Component {
             <View style={styles.container}>
                 <View style={styles.inputContainer}>
                     <Input
-                        value={this.state.Name}
+                        value={this.state.name}
                         placeholder="Name"
                         type='Name'
                         onChangeText={this.onChangeText}
                     />
                     <Input
-                        value={this.state.Description}
+                        value={this.state.description}
                         placeholder="Description"
                         type='Description'
                         onChangeText={this.onChangeText}

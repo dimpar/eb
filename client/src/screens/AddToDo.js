@@ -8,6 +8,7 @@ import {addTask, resetCreateTask} from "../actions/task";
 import {colors, iconSize} from '../theme'
 import DatePicker from "../components/DatePicker";
 import moment from "moment";
+import Constants from "../util/constants";
 
 
 const initialState = {
@@ -164,15 +165,14 @@ class AddToDo extends React.Component {
                     </View>
                     <View style={styles.iconTitles}>
                         <Text>Add priority to your task:</Text>
-                        {/*//TODO: extract const values for priority 1,2,3,4*/}
                         <Picker
                             style={styles.twoPickers} itemStyle={styles.twoPickerItems}
                             selectedValue={this.state.priority}
                             onValueChange={(itemValue) => this.setState({priority: itemValue})}>
-                            <Picker.Item color={colors.fourth} label="Do, important but not urgent" value="1" />
-                            <Picker.Item color={colors.third} label="Do now, urgent and important" value="2" />
-                            <Picker.Item color={colors.primary} label="Do later, not important or urgent" value="3" />
-                            <Picker.Item color={colors.greenish} label="Delegate, urgent but not important" value="4" />
+                            <Picker.Item color={colors.fourth} label="Do, important but not urgent" value={Constants.PRIORITY.URGENT_IMPORTANT} />
+                            <Picker.Item color={colors.third} label="Do now, urgent and important" value={Constants.PRIORITY.NOT_URGENT_IMPORTANT} />
+                            <Picker.Item color={colors.primary} label="Do later, not important or urgent" value={Constants.PRIORITY.URGENT_NOT_IMPORTANT} />
+                            <Picker.Item color={colors.greenish} label="Delegate, urgent but not important" value={Constants.PRIORITY.NOT_URGENT_NOT_IMPORTANT} />
                         </Picker>
 
                     </View>

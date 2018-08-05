@@ -77,7 +77,9 @@ export function resetCreateTask() {
 export function getTasks() {
     return async (dispatch) => {
         try {
-            const apiResponse = await API.get(APIname, homePath);
+            let path = homePath + '/tasks';
+            const apiResponse = await API.get(APIname, path);
+
             if (apiResponse.error) {
                 dispatch(failureGetTasks())
             } else {
