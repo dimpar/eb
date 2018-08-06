@@ -7,6 +7,7 @@ import EditTask from "./EditTask";
 import {deleteTask, getTasks, resetDeleteTask, resetUpdateTask} from "../actions/task";
 import {connect} from "react-redux";
 import {colors} from "../theme";
+import { API } from 'aws-amplify'
 
 class ToDoList extends React.Component {
 
@@ -73,6 +74,23 @@ class ToDoList extends React.Component {
         />
     );
 
+    invokeGetNote = async () => {
+        const path = "/Tasks/eb1/2018-06-14T06-38-39.742Z";
+
+        try {
+            const apiResponse = await API.get("TasksCRUD", path);
+            if (apiResponse.error) {
+                console.log("get note error:",  apiResponse.error, apiResponse.key)
+            } else {
+                console.log("success:", apiResponse)
+            }
+
+            return apiResponse;
+        } catch (e) {
+            console.log("error:", e);
+        }
+    };
+
     render() {
         const { task: {
             confirmCreatedTask,
@@ -102,7 +120,10 @@ class ToDoList extends React.Component {
                 />
 
                 <Icon name="add" size={22} style={[styles.add, styles.iconColor]} onPress={() => this.props.navigation.navigate('AddToDo', { onTaskAdd: this.onTaskAdd })}/>
+
+                <Icon name="add" size={22} style={[styles.add, styles.iconColor]} onPress={() => this.invokeGetNote()}/>
             </List>
+
         )
     }
 }
