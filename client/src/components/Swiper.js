@@ -1,18 +1,7 @@
-import React, { Component } from 'react'
-import { colors, fonts } from '../theme'
-import {
-    Text,
-    View,
-    Image,
-    Dimensions,
-    ImageBackground,
-    Button
-} from 'react-native'
+import React, {Component} from 'react'
+import {colors, fonts} from '../theme'
+import {Dimensions, ImageBackground, Text, View} from 'react-native'
 import Swiper from 'react-native-swiper'
-import SignIn from "../auth/SignIn";
-import SignUp from "../auth/SignUp";
-import Tabs from '../auth/Tabs';
-import AuthHome from "../screens/AuthHome";
 
 
 const { width } = Dimensions.get('window')

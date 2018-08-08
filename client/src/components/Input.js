@@ -1,10 +1,7 @@
 import React from 'react'
-import {
-    StyleSheet,
-    TextInput, View
-} from 'react-native'
+import {StyleSheet, TextInput} from 'react-native'
 
-import { colors } from '../theme'
+import {colors} from '../theme'
 
 export default ({ placeholder, onChangeText, type, ...props }) => (
     <TextInput
@@ -12,7 +9,7 @@ export default ({ placeholder, onChangeText, type, ...props }) => (
         autoCorrect={false}
         style={[styles.input]}
         placeholder={placeholder}
-        placeholderTextColor="#a0a0a0"
+        placeholderTextColor={colors.lightGray}
         onChangeText={value => onChangeText(type, value)}
         multiline = {true}
         underlineColorAndroid='transparent'

@@ -14,30 +14,35 @@ import {
     RESET_UPDATING_TASK
 } from '../reducers/task'
 
-export function createTask(Description, Name, createDate) {
+
+const homePath = '/tasksnotes';
+const APIname = 'tasksnotesCRUD';
+
+
+export function addTask(newTask) {
     return async (dispatch) => {
-        let newTask = {
+        let taskToSave = {
             body: {
-                "Description": Description,
-                "Name": Name,
-                "createDate": createDate
+                "task": newTask
             }
         };
 
-        const path = "/Tasks";
+        console.log("adding task to save: ", taskToSave);
+
+        let path = homePath + "/tasks/add/";
 
         try {
-            const apiResponse = await API.post("TasksCRUD", path, newTask);
+            const apiResponse = await API.put(APIname, path, taskToSave);
             if (apiResponse.error) {
+                console.log("Error - /tasks/add", apiResponse);
                 dispatch(failureCreatingNewTask());
             } else {
+                console.log("Life's good - /tasks/add", apiResponse);
                 dispatch(confirmCreateNewTask());
             }
-            console.log("response from saving a task in actions: ");
-            console.log(apiResponse);
         } catch (e) {
             dispatch(failureCreatingNewTask());
-            console.log(e);
+            console.log("Error exception", e);
         }
     }
 }
@@ -46,16 +51,11 @@ export function updateTask(Description, Name, createDate) {
     return async (dispatch) => {
         let newTask = {
             body: {
-                "Description": Description,
-                "Name": Name,
-                "createDate": createDate
             }
         };
 
-        const path = "/Tasks";
-
         try {
-            const apiResponse = await API.put("TasksCRUD", path, newTask);
+            const apiResponse = await API.put(APIname, homePath, newTask);
             if (apiResponse.error) {
                 dispatch(failureUpdatingTask());
             } else {
@@ -76,10 +76,10 @@ export function resetCreateTask() {
 
 export function getTasks() {
     return async (dispatch) => {
-        const path = "/Tasks";
-
         try {
-            const apiResponse = await API.get("TasksCRUD", path);
+            let path = homePath + '/tasks';
+            const apiResponse = await API.get(APIname, path);
+
             if (apiResponse.error) {
                 dispatch(failureGetTasks())
             } else {
@@ -97,9 +97,9 @@ export function getTasks() {
 export function deleteTask(createDate) {
     return async (dispatch) => {
 
-        const path = "/Tasks/object/" + createDate;
+        const path_delete = path + "/object/" + createDate;
         try {
-            const apiResponse = await API.del("TasksCRUD", path);
+            const apiResponse = await API.del(APIname, path_delete);
             if (apiResponse.error) {
                 dispatch(failureDeleteTask())
             } else {
