@@ -90,6 +90,7 @@ class AddToDo extends React.Component {
             reminder: reminder
         };
 
+        this.state.newTask = newTask;
         this.props.dispatchAddTask(newTask)
     }
 

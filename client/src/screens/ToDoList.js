@@ -1,5 +1,5 @@
 import React from "react";
-import {FlatList, StyleSheet, View} from "react-native";
+import {FlatList, StyleSheet, View, ActivityIndicator} from "react-native";
 import {List, ListItem, SearchBar} from "react-native-elements";
 import FontAwesomeIcon from '@expo/vector-icons/FontAwesome';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
@@ -17,6 +17,7 @@ class ToDoList extends React.Component {
         super(props);
 
         this.state = {
+            loading: true,
             refresh: false,
         };
 
@@ -32,7 +33,10 @@ class ToDoList extends React.Component {
 
     getTasks = () => {
         this.props.dispatchGetTasks().then(response => {
-            this.setState({data: response.tasks});
+            this.setState({
+                data: response.tasks,
+                loading: false
+            });
         });
     };
 
@@ -120,7 +124,6 @@ class ToDoList extends React.Component {
         const { task: {
             confirmCreatedTask,
             failureCreatingTask,
-
         }} = this.props;
 
         if (confirmCreatedTask && !failureCreatingTask) {
@@ -141,10 +144,10 @@ class ToDoList extends React.Component {
                     // onRefresh={this.handleRefresh}
                     // refreshing={this.state.refreshing}
                     // onEndReached={this.handleLoadMore}
-                    // onEndReachedThreshold={50}
+                    // onEndReachedThreshold={5}
                 />
 
-                <MaterialIcons name="add-circle" size={40} style={[styles.add, styles.iconAdd]} onPress={() => this.props.navigation.navigate('AddToDo', { onTaskAdd: this.onTaskAdd })}/>
+                <MaterialIcons name="add-circle" size={50} style={[styles.add, styles.iconAdd]} onPress={() => this.props.navigation.navigate('AddToDo', { onTaskAdd: this.onTaskAdd })}/>
             </List>
 
         )
@@ -182,7 +185,9 @@ const styles = StyleSheet.create({
     },
     iconAdd: {
         color: colors.fourth,
-        textAlign: 'right'
+        position: 'absolute',
+        bottom: 10,
+        right: 30,
     },
     iconsPriority: {
         marginRight: 20,
