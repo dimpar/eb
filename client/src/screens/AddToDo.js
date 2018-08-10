@@ -170,8 +170,8 @@ class AddToDo extends React.Component {
                             style={styles.twoPickers} itemStyle={styles.twoPickerItems}
                             selectedValue={this.state.priority}
                             onValueChange={(itemValue) => this.setState({priority: itemValue})}>
-                            <Picker.Item color={colors.fourth} label="Do, important but not urgent" value={Constants.PRIORITY.URGENT_IMPORTANT} />
-                            <Picker.Item color={colors.third} label="Do now, urgent and important" value={Constants.PRIORITY.NOT_URGENT_IMPORTANT} />
+                            <Picker.Item color={colors.fourth} label="Do now, urgent and important" value={Constants.PRIORITY.URGENT_IMPORTANT} />
+                            <Picker.Item color={colors.third} la bel="Do, important but not urgent" value={Constants.PRIORITY.NOT_URGENT_IMPORTANT} />
                             <Picker.Item color={colors.primary} label="Do later, not important or urgent" value={Constants.PRIORITY.URGENT_NOT_IMPORTANT} />
                             <Picker.Item color={colors.greenish} label="Delegate, urgent but not important" value={Constants.PRIORITY.NOT_URGENT_NOT_IMPORTANT} />
                         </Picker>
