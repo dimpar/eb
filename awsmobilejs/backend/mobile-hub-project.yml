@@ -3,39 +3,42 @@ apps:
   react-native: !com.amazonaws.mobilehub.v0.AppDO {}
 features:
   cloudlogic: !com.amazonaws.mobilehub.v0.CloudLogic 
+    attributes:
+      no-lock: true
     components:
-      TasksCRUD: !com.amazonaws.mobilehub.v0.API 
+      tasksnotesCRUD: !com.amazonaws.mobilehub.v0.API 
         attributes:
-          name: TasksCRUD
+          disable-aws-auth: false
+          name: tasksnotesCRUD
           requires-signin: false
           sdk-generation-stage-name: Development
         paths:
-          /Tasks: !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/Tasks-20180712210536.zip
-            description: 'Handler for calls to resource path : /Tasks/{proxy+}'
+          /tasksnotes: !com.amazonaws.mobilehub.v0.Function 
+            codeFilename: uploads/tasksnotes-20180828183536.zip
+            description: 'Handler for calls to resource path : /tasksnotes/{proxy+}'
             enableCORS: true
             environment: {}
             handler: lambda.handler
-            hashcode: g934S/ZqnBayMDVVCCUQf3tMqFap/3aB04snY5xqVmA=
+            hashcode: s8e+8Pr4rhojUXhpDSv+Gc6aLxG6RFOU8KrrVE5RAkM=
             memorySize: '128'
-            modified: '2018-07-13T03:06:19.623+0000'
-            name: Tasks
+            modified: '2018-08-29T00:36:21.135+0000'
+            name: tasksnotes
             runtime: nodejs6.10
             timeout: '3'
-            version: LeOFP5sB8yo0JnNeod1nOmopFJKw1Zyf
-          '/Tasks/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/Tasks-20180712210536.zip
-            description: 'Handler for calls to resource path : /Tasks/{proxy+}'
+            version: mw3iOs5h.b0wu7cSVyz_PFH9_nUMbr_f
+          '/tasksnotes/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
+            codeFilename: uploads/tasksnotes-20180828183536.zip
+            description: 'Handler for calls to resource path : /tasksnotes/{proxy+}'
             enableCORS: true
             environment: {}
             handler: lambda.handler
-            hashcode: g934S/ZqnBayMDVVCCUQf3tMqFap/3aB04snY5xqVmA=
+            hashcode: s8e+8Pr4rhojUXhpDSv+Gc6aLxG6RFOU8KrrVE5RAkM=
             memorySize: '128'
-            modified: '2018-07-13T03:06:19.623+0000'
-            name: Tasks
+            modified: '2018-08-29T00:36:21.135+0000'
+            name: tasksnotes
             runtime: nodejs6.10
             timeout: '3'
-            version: DC9BQSA1DGaAQGFCTgtdh2dUeureUPVb
+            version: _UYT1SLCki0cEn_tUc1FqpgVYsJ0l7hD
   content-delivery: !com.amazonaws.mobilehub.v0.ContentDelivery 
     attributes:
       enabled: true
@@ -48,16 +51,15 @@ features:
         tables:
           - !com.amazonaws.mobilehub.v0.NoSQLTable 
             attributes:
-              createDate: S
               notes: L
               settings: M
               tasks: L
               userId: S
             hashKeyName: userId
             hashKeyType: S
-            rangeKeyName: createDate
-            rangeKeyType: S
-            tableName: ___DYNAMIC_PREFIX___-Tasks
+            rangeKeyName: ''
+            rangeKeyType: ''
+            tableName: ___DYNAMIC_PREFIX___-tasksnotes
             tablePrivacy: private
   mobile-analytics: !com.amazonaws.mobilehub.v0.Pinpoint 
     components:

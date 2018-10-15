@@ -10,6 +10,8 @@ import {FontAwesome} from '@expo/vector-icons';
 
 Amplify.configure(awsmobile);
 
+
+//TODO: add logout button
 class App extends React.Component {
     state = {
         isLoadingComplete: false,

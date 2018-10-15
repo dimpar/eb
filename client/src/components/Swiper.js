@@ -39,13 +39,16 @@ const styles = {
     },
 }
 
+//TODO: images won't display on a mobile phone. Resize?
 export default class extends Component {
+
     render () {
         return (
             <View style={styles.container}>
                 <Swiper style={styles.wrapper} horizontal={true} autoplay={true}
                         dot={<View style={{backgroundColor: colors.primary, width: 5, height: 5, borderRadius: 4, marginLeft: 3, marginRight: 3, marginTop: 3, marginBottom: 3}} />}
                         activeDot={<View style={{backgroundColor: '#fff', width: 8, height: 8, borderRadius: 4, marginLeft: 3, marginRight: 3, marginTop: 3, marginBottom: 3}} />}>
+
                     <View style={styles.img_container}>
                         <ImageBackground imageStyle={{resizeMode: 'cover'}} style={styles.image} source={require('../assets/laptop.jpg')} >
                             <View style={styles.slide}>
@@ -56,15 +59,15 @@ export default class extends Component {
                             </View>
                         </ImageBackground>
                     </View>
-                     <View style={styles.img_container}>
-                         <ImageBackground imageStyle={{resizeMode: 'cover'}} style={styles.image} source={require('../assets/coffee.jpg')} >
-                                 <View style={styles.slide}>
-                                    <Text style={styles.imageText}>
-                                        Focus on being productive instead of busy.
-                                    </Text>
-                                 </View>
-                            </ImageBackground>
-                     </View>
+                    <View style={styles.img_container}>
+                        <ImageBackground imageStyle={{resizeMode: 'cover'}} style={styles.image} source={require('../assets/coffee.jpg')} >
+                             <View style={styles.slide}>
+                                <Text style={styles.imageText}>
+                                    Focus on being productive instead of busy.
+                                </Text>
+                             </View>
+                        </ImageBackground>
+                    </View>
                     <View style={styles.img_container}>
                         <ImageBackground imageStyle={{resizeMode: 'cover'}} style={styles.image} source={require('../assets/wood.jpg')} >
                             <View style={styles.slide}>
@@ -74,6 +77,7 @@ export default class extends Component {
                             </View>
                         </ImageBackground>
                     </View>
+
                  </Swiper>
             </View>
         )

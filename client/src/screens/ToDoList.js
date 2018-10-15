@@ -11,6 +11,7 @@ import {connect} from "react-redux";
 import {colors} from "../theme";
 import Constants from "../util/constants";
 
+//TODO: fade away the tasks that a past due
 class ToDoList extends React.Component {
 
     constructor(props) {
@@ -33,15 +34,20 @@ class ToDoList extends React.Component {
 
     getTasks = () => {
         this.props.dispatchGetTasks().then(response => {
+            let tasks = response.tasks;
+
             this.setState({
-                data: response.tasks,
+                data: Object.keys(tasks).map(function(key) {
+                    tasks[key]['id'] = key;
+                    return tasks[key];
+                }),
                 loading: false
             });
         });
     };
 
-    deleteTask = (createDate) => {
-        this.props.dispatchDeleteTask(createDate)
+    deleteTask = (id) => {
+        this.props.dispatchDeleteTask(id)
     };
 
     //keep in mind that this will be executed on every component update
@@ -85,7 +91,12 @@ class ToDoList extends React.Component {
         }
     };
 
+    extractItem(item) {
+        return item[Object.keys(item)[0]]
+    }
+
     renderItem = ({ item }) => (
+
         <ListItem
             title={item.name}
             subtitle={item.description}
@@ -94,7 +105,7 @@ class ToDoList extends React.Component {
                 this.getPriorityIcon(item)
             }
             rightIcon={
-                <MaterialIcons name={'delete-forever'} size={22} style={styles.iconDelete} onPress={() => this.deleteTask(item.createDate)}/>
+                <MaterialIcons name={'delete-forever'} size={22} style={styles.iconDelete} onPress={() => this.deleteTask(item.id)}/>
             }
             onPress={() => this.props.navigation.navigate('EditTask', {item: item})}
         />
@@ -138,7 +149,7 @@ class ToDoList extends React.Component {
                     data={this.state.data}
                     extraData={this.state.refresh}
                     renderItem={this.renderItem}
-                    keyExtractor={item => item.createDate}
+                    keyExtractor={item => item.id}
                     ListHeaderComponent={this.renderHeader}
                     ListFooterComponent={this.renderFooter}
                     // onRefresh={this.handleRefresh}
@@ -160,7 +171,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
     dispatchGetTasks: () => getTasks(),
-    dispatchDeleteTask: (createDate) => deleteTask(createDate),
+    dispatchDeleteTask: (id) => deleteTask(id),
     dispatchResetDeleteTask: () => resetDeleteTask(),
     dispatchResetUpdateTask: () => resetUpdateTask(),
 };
@@ -174,7 +185,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         backgroundColor: colors.background,
         borderBottomWidth: 0,
-        borderTopWidth: 0
+        borderTopWidth: 0,
+        flex: 1
     },
     add: {
         marginTop: 20,
@@ -186,8 +198,8 @@ const styles = StyleSheet.create({
     iconAdd: {
         color: colors.fourth,
         position: 'absolute',
-        bottom: 10,
-        right: 30,
+        bottom: 20,
+        right: 20,
     },
     iconsPriority: {
         marginRight: 20,

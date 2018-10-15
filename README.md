@@ -1,3 +1,15 @@
+Amazon code repo:
+ https://git-codecommit.us-east-1.amazonaws.com/v1/repos/emberbee 
+ 
+ list remote:
+ git remote -v
+ 
+ set new remote:
+ git remote set-url origin https://git-codecommit.us-east-1.amazonaws.com/v1/repos/emberbee
+ 
+ 
+
+
 This project was bootstrapped with [Create React Native App](https://github.com/react-community/create-react-native-app).
 
 Below you'll find information about performing common tasks. The most recent version of this guide is available [here](https://github.com/react-community/create-react-native-app/blob/master/react-native-scripts/template/README.md).

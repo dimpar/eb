@@ -1,5 +1,5 @@
 import React from "react";
-import {Picker, StyleSheet, Text, TextInput, View} from "react-native";
+import {Picker, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import Input from "../components/Input";
 import {connect} from "react-redux";
 import {resetUpdateTask, updateTask} from "../actions/task";
@@ -17,13 +17,16 @@ class EditTask extends React.Component {
         const { navigation: {
             state: {
                 params: {
-                    item
+                    item,
+                    id
                 }
             }
         }} = this.props;
 
+        console.log("displaying item:", item);
+
         this.state = {
-            createDate: item.createDate,
+            id: item.id,
             description: item.description,
             name: item.name,
             due: item.due,
@@ -58,7 +61,11 @@ class EditTask extends React.Component {
         })
     };
 
-    showDueDateTimePicker = () => this.setState({ isDueDateTimePickerVisible: true });
+    showDueDateTimePicker = () => {
+        console.log("teste");
+        this.setState({ isDueDateTimePickerVisible: true })
+
+    };
 
     hideDueDateTimePicker = () => this.setState({ isDueDateTimePickerVisible: false });
 
@@ -66,21 +73,37 @@ class EditTask extends React.Component {
 
     hideReminderDateTimePicker = () => this.setState({ isReminderDateTimePickerVisible: false });
 
+    handleReminderDate = (date) => {
+        this.setState({reminder: date.toISOString()});
+        this.hideReminderDateTimePicker();
+    };
+
+    handleDueDate = (date) => {
+        this.setState({due: date.toISOString()});
+        this.hideDueDateTimePicker();
+    };
+
     getDate = (date) => {
         return date != '' ? moment(date).format("LLL") : 'select';
     };
 
-    //TODO: update client & backend for new features
-    async updateTask(createDate) {
-        const { Description, Name} = this.state;
-        console.log("on update", this.state);
-        this.state.updatedTask = {
-            Description: Description,
-            Name: Name
+    async updateTask() {
+        const { description, name, due, reminder, priority, id} = this.state;
+
+        let updatedTask = {
+            id: id,
+            description: description,
+            due: due,
+            name: name,
+            priority: priority,
+            reminder: reminder
         };
-        this.props.dispatchUpdateTask(Description, Name, createDate)
+        console.log("on update", updatedTask);
+
+        this.props.dispatchUpdateTask(updatedTask)
     }
 
+    // TODO: when clicking on a Due or Reminder, open up the calendar
     render() {
 
         return (
@@ -88,8 +111,8 @@ class EditTask extends React.Component {
                 <View style={styles.inputContainer}>
                     <Input
                         value={this.state.name}
-                        placeholder="Name"
-                        type='Name'
+                        placeholder="Name of this task"
+                        type='name'
                         onChangeText={this.onChangeText}
                     />
 
@@ -104,7 +127,7 @@ class EditTask extends React.Component {
                     />
                 </View>
 
-                <View style={{flexDirection: 'row'}}>
+                <View style={{flexDirection: 'row'}} >
                     <View style={styles.icons}>
                         <DatePicker
                             showDateTimePicker = {this.showDueDateTimePicker}
@@ -114,10 +137,12 @@ class EditTask extends React.Component {
                             iconName = 'calendar'
                         />
                     </View>
-                    <View style={styles.iconTitles}>
-                        <Text>Due: {this.getDate(this.state.due)} </Text>
-                        <Text style={styles.iconDescription}>Set a due date and time</Text>
-                    </View>
+                    <TouchableOpacity onPress={() => this.showDueDateTimePicker()}>
+                        <View style={styles.iconTitles}  >
+                            <Text>Due: {this.getDate(this.state.due)} </Text>
+                            <Text style={styles.iconDescription}>Set a due date and time</Text>
+                        </View>
+                    </TouchableOpacity>
                 </View>
 
                 <View style={{flexDirection: 'row'}}>
@@ -130,15 +155,17 @@ class EditTask extends React.Component {
                             iconName = 'bell'
                         />
                     </View>
-                    <View style={styles.iconTitles}>
-                        <Text>Reminder: {this.getDate(this.state.reminder)} </Text>
-                        <Text style={styles.iconDescription}>Add time or location reminder</Text>
-                    </View>
+                    <TouchableOpacity onPress={() => this.showReminderDateTimePicker()}>
+                        <View style={styles.iconTitles}>
+                            <Text>Reminder: {this.getDate(this.state.reminder)} </Text>
+                            <Text style={styles.iconDescription}>Add time or location reminder</Text>
+                        </View>
+                    </TouchableOpacity>
                 </View>
 
                 <View style={{flexDirection: 'row'}}>
                     <View style={styles.icons}>
-                        <Entypo name='flag' size={iconSize.primary} color={colors.fourth} onPress={() => this.handlePriority()}/>
+                        <Entypo name='flag' size={iconSize.primary} color={colors.fourth}/>
                     </View>
                     <View style={styles.iconTitles}>
                         <Text>Add priority to your task:</Text>
@@ -146,16 +173,16 @@ class EditTask extends React.Component {
                             style={styles.twoPickers} itemStyle={styles.twoPickerItems}
                             selectedValue={this.state.priority}
                             onValueChange={(itemValue) => this.setState({priority: itemValue})}>
-                            <Picker.Item color={colors.fourth} label="Do, important but not urgent" value={Constants.PRIORITY.URGENT_IMPORTANT} />
-                            <Picker.Item color={colors.third} label="Do now, urgent and important" value={Constants.PRIORITY.NOT_URGENT_IMPORTANT} />
-                            <Picker.Item color={colors.primary} label="Do later, not important or urgent" value={Constants.PRIORITY.URGENT_NOT_IMPORTANT} />
-                            <Picker.Item color={colors.greenish} label="Delegate, urgent but not important" value={Constants.PRIORITY.NOT_URGENT_NOT_IMPORTANT} />
+                            <Picker.Item color={colors.third} label="Do now, urgent and important" value={Constants.PRIORITY.URGENT_IMPORTANT} />
+                            <Picker.Item color={colors.fourth} label="Do, important but not urgent" value={Constants.PRIORITY.NOT_URGENT_IMPORTANT} />
+                            <Picker.Item color={colors.greenish} label="Delegate, urgent but not important" value={Constants.PRIORITY.URGENT_NOT_IMPORTANT} />
+                            <Picker.Item color={colors.primary} label="Do later, not important or urgent" value={Constants.PRIORITY.NOT_URGENT_NOT_IMPORTANT} />
                         </Picker>
 
                     </View>
                 </View>
 
-                <Button title="Update" onPress={() => this.updateTask(this.state.createDate)}/>
+                <Button title="Update" onPress={() => this.updateTask()}/>
 
             </View>
         )
@@ -167,7 +194,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-    dispatchUpdateTask: (Description, Name, createDate) => updateTask(Description, Name, createDate),
+    dispatchUpdateTask: (updatedTask) => updateTask(updatedTask),
     dispatchResetUpdateTask: () => resetUpdateTask()
 };
 
@@ -181,7 +208,7 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        paddingHorizontal: 40,
+        paddingHorizontal: 30,
         marginTop: 20
     },
     inputContainerTextInput: {
@@ -199,5 +226,11 @@ const styles = StyleSheet.create({
     },
     iconTitles: {
         padding: 20
-    }
+    },
+    icons: {
+        padding: 15
+    },
+    iconDescription: {
+        color: colors.lightGray
+    },
 });

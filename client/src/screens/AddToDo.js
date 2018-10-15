@@ -1,5 +1,5 @@
 import React from "react";
-import {Picker, StyleSheet, Text, TextInput, View} from "react-native";
+import {Picker, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import Input from "../components/Input";
 import {connect} from "react-redux";
 import Icon from '@expo/vector-icons/Ionicons';
@@ -14,7 +14,7 @@ import Constants from "../util/constants";
 const initialState = {
     name: '',
     description: '',
-    createDate: '',
+    id: '',
     due: '',
     reminder: '',
     priority: '1'
@@ -26,7 +26,7 @@ const initialState = {
 class AddToDo extends React.Component {
 
     //is there a better way to go back to ToDoList?
-    //we execute this function every time we type (create) a new task
+    //executing this function every time we type (create) a new task
     componentDidUpdate() {
         const { task: {
             confirmCreatedTask,
@@ -75,14 +75,13 @@ class AddToDo extends React.Component {
         return date != '' ? moment(date).format("LLL") : 'select';
     };
 
-    //TODO: change lambda to handle creation of a tasks array. Now it will fail if the array is empty
-    addTask() {
+    async addTask() {
         let rightNow = new Date();
         let now = rightNow.toISOString().replace(/:/g, '-');
         const { description, name, due, reminder, priority} = this.state;
 
         let newTask = {
-            createDate: now,
+            id: now,
             description: description,
             due: due,
             name: name,
@@ -103,7 +102,9 @@ class AddToDo extends React.Component {
         navigation.goBack();
     }
 
-    // TODO: add priority and labels
+    // TODO: when clicking on a Due or Reminder, open up the calendar
+
+    // TODO: add labels / tags
     // TODO: add 'repeat' functionality in due date
     // TODO: add 'time needed' field.
     render() {
@@ -138,10 +139,12 @@ class AddToDo extends React.Component {
                             iconName = 'calendar'
                         />
                     </View>
-                    <View style={styles.iconTitles}>
-                        <Text>Due: {this.getDate(this.state.due)} </Text>
-                        <Text style={styles.iconDescription}>Set a due date and time</Text>
-                    </View>
+                    <TouchableOpacity onPress={() => this.showDueDateTimePicker()}>
+                        <View style={styles.iconTitles}>
+                            <Text>Due: {this.getDate(this.state.due)} </Text>
+                            <Text style={styles.iconDescription}>Set a due date and time</Text>
+                        </View>
+                    </TouchableOpacity>
                 </View>
 
                 <View style={{flexDirection: 'row'}}>
@@ -154,15 +157,17 @@ class AddToDo extends React.Component {
                             iconName = 'bell'
                         />
                     </View>
-                    <View style={styles.iconTitles}>
-                        <Text>Reminder: {this.getDate(this.state.reminder)} </Text>
-                        <Text style={styles.iconDescription}>Add time or location reminder</Text>
-                    </View>
+                    <TouchableOpacity onPress={() => this.showReminderDateTimePicker()}>
+                        <View style={styles.iconTitles}>
+                            <Text>Reminder: {this.getDate(this.state.reminder)} </Text>
+                            <Text style={styles.iconDescription}>Add time or location reminder</Text>
+                        </View>
+                    </TouchableOpacity>
                 </View>
 
                 <View style={{flexDirection: 'row'}}>
                     <View style={styles.icons}>
-                        <Entypo name='flag' size={iconSize.primary} color={colors.fourth} onPress={() => this.handlePriority()}/>
+                        <Entypo name='flag' size={iconSize.primary} color={colors.fourth}/>
                     </View>
                     <View style={styles.iconTitles}>
                         <Text>Add priority to your task:</Text>
@@ -171,7 +176,7 @@ class AddToDo extends React.Component {
                             selectedValue={this.state.priority}
                             onValueChange={(itemValue) => this.setState({priority: itemValue})}>
                             <Picker.Item color={colors.fourth} label="Do now, urgent and important" value={Constants.PRIORITY.URGENT_IMPORTANT} />
-                            <Picker.Item color={colors.third} la bel="Do, important but not urgent" value={Constants.PRIORITY.NOT_URGENT_IMPORTANT} />
+                            <Picker.Item color={colors.third} label="Do, important but not urgent" value={Constants.PRIORITY.NOT_URGENT_IMPORTANT} />
                             <Picker.Item color={colors.primary} label="Do later, not important or urgent" value={Constants.PRIORITY.URGENT_NOT_IMPORTANT} />
                             <Picker.Item color={colors.greenish} label="Delegate, urgent but not important" value={Constants.PRIORITY.NOT_URGENT_NOT_IMPORTANT} />
                         </Picker>

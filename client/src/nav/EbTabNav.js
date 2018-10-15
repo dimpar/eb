@@ -4,7 +4,7 @@ import FontAwesomeIcon from '@expo/vector-icons/FontAwesome';
 import OcticonsIcon from '@expo/vector-icons/Octicons';
 import SimpleLineIcon from '@expo/vector-icons/SimpleLineIcons';
 import EbNav from './EbNav';
-import CalendarScreen from "../screens/Calendar";
+import Calendar from "../screens/Calendar";
 import Notes from "../screens/Notes";
 
 const TabNav = createBottomTabNavigator({
@@ -16,7 +16,7 @@ const TabNav = createBottomTabNavigator({
         }
     },
     CalendarItem: {
-        screen: CalendarScreen,
+        screen: Calendar,
         navigationOptions: {
             tabBarLabel:"Calendar",
             tabBarIcon: ({ tintColor }) => <FontAwesomeIcon name={"calendar"} size={27} color={tintColor} />

@@ -6,7 +6,8 @@ import {
 } from 'react-native';
 import {Agenda} from 'react-native-calendars';
 
-export default class CalendarScreen extends Component {
+//TODO: integrate calendar with tasks.
+export default class Calendar extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -21,44 +22,44 @@ export default class CalendarScreen extends Component {
 
         return (
             <Agenda
-        items={this.state.items}
-        loadItemsForMonth={this.loadItems.bind(this)}
-        renderItem={this.renderItem.bind(this)}
-        renderEmptyDate={this.renderEmptyDate.bind(this)}
-        rowHasChanged={this.rowHasChanged.bind(this)}
-        markingType={'multi-dot'}
-        markedDates={{
-            '2018-03-15': {dots: [work, workout], textColor: '#666'},
-            '2018-03-16': {dots: [work], textColor: '#666'},
-            '2018-03-25': {dots: [vacation], color: 'blue'},
-            '2018-03-26': {dots: [vacation], color: 'blue'},
-            '2018-03-27': {dots: [vacation], color: 'blue'},
-            '2018-03-28': {dots: [vacation], color: 'blue'},
-            '2018-03-29': {dots: [vacation], color: 'gray'},
-            '2018-03-30': {dots: [vacation], color: 'gray'},
-            '2018-03-31': {dots: [vacation], color: 'gray'},
-        }}
-        theme={{
-            agendaTodayColor: '#e0850a',
-                agendaKnobColor: '#f44411',
-                backgroundColor: '#ffffff',
-                calendarBackground: '#ffffff',
-                textSectionTitleColor: '#b6c1cd',
-                selectedDayBackgroundColor: '#00adf5',
-                selectedDayTextColor: '#ffffff',
-                todayTextColor: '#00adf5',
-                dayTextColor: '#2d4150',
-                textDisabledColor: '#fff',
-                dotColor: '#00adf5',
-                selectedDotColor: '#ffffff',
-                arrowColor: 'orange',
-                monthTextColor: '#002f4f',
-                textDayFontSize: 16,
-                textMonthFontSize: 16,
-                textDayHeaderFontSize: 16
-        }}
-        />
-    );
+                items={this.state.items}
+                loadItemsForMonth={this.loadItems.bind(this)}
+                renderItem={this.renderItem.bind(this)}
+                renderEmptyDate={this.renderEmptyDate.bind(this)}
+                rowHasChanged={this.rowHasChanged.bind(this)}
+                markingType={'multi-dot'}
+                markedDates={{
+                    '2018-03-15': {dots: [work, workout], textColor: '#666'},
+                    '2018-03-16': {dots: [work], textColor: '#666'},
+                    '2018-03-25': {dots: [vacation], color: 'blue'},
+                    '2018-03-26': {dots: [vacation], color: 'blue'},
+                    '2018-03-27': {dots: [vacation], color: 'blue'},
+                    '2018-03-28': {dots: [vacation], color: 'blue'},
+                    '2018-03-29': {dots: [vacation], color: 'gray'},
+                    '2018-03-30': {dots: [vacation], color: 'gray'},
+                    '2018-03-31': {dots: [vacation], color: 'gray'},
+                }}
+                theme={{
+                    agendaTodayColor: '#e0850a',
+                    agendaKnobColor: '#f44411',
+                    backgroundColor: '#ffffff',
+                    calendarBackground: '#ffffff',
+                    textSectionTitleColor: '#b6c1cd',
+                    selectedDayBackgroundColor: '#00adf5',
+                    selectedDayTextColor: '#ffffff',
+                    todayTextColor: '#00adf5',
+                    dayTextColor: '#2d4150',
+                    textDisabledColor: '#fff',
+                    dotColor: '#00adf5',
+                    selectedDotColor: '#ffffff',
+                    arrowColor: 'orange',
+                    monthTextColor: '#002f4f',
+                    textDayFontSize: 16,
+                    textMonthFontSize: 16,
+                    textDayHeaderFontSize: 16
+                }}
+            />
+        );
     }
 
     loadItems(day) {
@@ -130,14 +131,15 @@ export default class CalendarScreen extends Component {
         const itemType = item.category || 'item';
 
         return (
-            <View style={[styles[itemType], {height: item.height}]}><Text style={[styles.listText]}>{item.name}</Text></View>
-    );
+            <View style={[styles[itemType], {height: item.height}]}><Text
+                style={[styles.listText]}>{item.name}</Text></View>
+        );
     }
 
     renderEmptyDate() {
         return (
             <View style={styles.emptyDate}><Text></Text></View>
-    );
+        );
     }
 
     rowHasChanged(r1, r2) {
